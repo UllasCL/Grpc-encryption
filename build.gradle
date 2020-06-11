@@ -1,9 +1,15 @@
+buildscript {
+	dependencies {
+		classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+	}
+}
 plugins {
 	id 'org.springframework.boot' version '2.4.0-SNAPSHOT'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
 	id "com.google.protobuf" version "0.8.12"
 }
+apply plugin: 'com.github.johnrengelman.shadow'
 
 group = 'com.ullas'
 version = '0.0.1-SNAPSHOT'
@@ -28,6 +34,8 @@ dependencies {
 	// https://mvnrepository.com/artifact/io.grpc/grpc-services
 	implementation group: 'io.grpc', name: 'grpc-services', version: '1.28.0'
 
+	// https://mvnrepository.com/artifact/javax.annotation/javax.annotation-api
+	implementation group: 'javax.annotation', name: 'javax.annotation-api', version: '1.3.2'
 }
 
 test {
@@ -36,8 +44,8 @@ test {
 sourceSets {
 	main {
 		java {
-			srcDirs 'build/generated/source/proto/main/grpc'
-			srcDirs 'build/generated/source/proto/main/java'
+			srcDirs 'src/generated/main/java'
+			srcDirs 'src/generated/main/grpc'
 		}
 	}
 }
@@ -52,10 +60,10 @@ protobuf {
 			artifact = 'io.grpc:protoc-gen-grpc-java:1.26.0'
 		}
 	}
-
 	generateProtoTasks {
 		all()*.plugins {
 			grpc {}
 		}
 	}
+	generatedFilesBaseDir = "$projectDir/src/generated"
 }
