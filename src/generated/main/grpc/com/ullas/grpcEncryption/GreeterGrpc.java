@@ -61,6 +61,37 @@ public final class GreeterGrpc {
     return getSayHelloMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<com.ullas.grpcEncryption.EncryptedMessageReqRes,
+      com.ullas.grpcEncryption.EncryptedMessageReqRes> getSayEncryptedHelloMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "SayEncryptedHello",
+      requestType = com.ullas.grpcEncryption.EncryptedMessageReqRes.class,
+      responseType = com.ullas.grpcEncryption.EncryptedMessageReqRes.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.ullas.grpcEncryption.EncryptedMessageReqRes,
+      com.ullas.grpcEncryption.EncryptedMessageReqRes> getSayEncryptedHelloMethod() {
+    io.grpc.MethodDescriptor<com.ullas.grpcEncryption.EncryptedMessageReqRes, com.ullas.grpcEncryption.EncryptedMessageReqRes> getSayEncryptedHelloMethod;
+    if ((getSayEncryptedHelloMethod = GreeterGrpc.getSayEncryptedHelloMethod) == null) {
+      synchronized (GreeterGrpc.class) {
+        if ((getSayEncryptedHelloMethod = GreeterGrpc.getSayEncryptedHelloMethod) == null) {
+          GreeterGrpc.getSayEncryptedHelloMethod = getSayEncryptedHelloMethod =
+              io.grpc.MethodDescriptor.<com.ullas.grpcEncryption.EncryptedMessageReqRes, com.ullas.grpcEncryption.EncryptedMessageReqRes>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "SayEncryptedHello"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.ullas.grpcEncryption.EncryptedMessageReqRes.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.ullas.grpcEncryption.EncryptedMessageReqRes.getDefaultInstance()))
+              .setSchemaDescriptor(new GreeterMethodDescriptorSupplier("SayEncryptedHello"))
+              .build();
+        }
+      }
+    }
+    return getSayEncryptedHelloMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -122,6 +153,16 @@ public final class GreeterGrpc {
       asyncUnimplementedUnaryCall(getSayHelloMethod(), responseObserver);
     }
 
+    /**
+     * <pre>
+     * req and response will be encrypted
+     * </pre>
+     */
+    public void sayEncryptedHello(com.ullas.grpcEncryption.EncryptedMessageReqRes request,
+        io.grpc.stub.StreamObserver<com.ullas.grpcEncryption.EncryptedMessageReqRes> responseObserver) {
+      asyncUnimplementedUnaryCall(getSayEncryptedHelloMethod(), responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -131,6 +172,13 @@ public final class GreeterGrpc {
                 com.ullas.grpcEncryption.HelloRequest,
                 com.ullas.grpcEncryption.HelloResponse>(
                   this, METHODID_SAY_HELLO)))
+          .addMethod(
+            getSayEncryptedHelloMethod(),
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.ullas.grpcEncryption.EncryptedMessageReqRes,
+                com.ullas.grpcEncryption.EncryptedMessageReqRes>(
+                  this, METHODID_SAY_ENCRYPTED_HELLO)))
           .build();
     }
   }
@@ -162,6 +210,17 @@ public final class GreeterGrpc {
       asyncUnaryCall(
           getChannel().newCall(getSayHelloMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     * <pre>
+     * req and response will be encrypted
+     * </pre>
+     */
+    public void sayEncryptedHello(com.ullas.grpcEncryption.EncryptedMessageReqRes request,
+        io.grpc.stub.StreamObserver<com.ullas.grpcEncryption.EncryptedMessageReqRes> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(getSayEncryptedHelloMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -189,6 +248,16 @@ public final class GreeterGrpc {
     public com.ullas.grpcEncryption.HelloResponse sayHello(com.ullas.grpcEncryption.HelloRequest request) {
       return blockingUnaryCall(
           getChannel(), getSayHelloMethod(), getCallOptions(), request);
+    }
+
+    /**
+     * <pre>
+     * req and response will be encrypted
+     * </pre>
+     */
+    public com.ullas.grpcEncryption.EncryptedMessageReqRes sayEncryptedHello(com.ullas.grpcEncryption.EncryptedMessageReqRes request) {
+      return blockingUnaryCall(
+          getChannel(), getSayEncryptedHelloMethod(), getCallOptions(), request);
     }
   }
 
@@ -219,9 +288,21 @@ public final class GreeterGrpc {
       return futureUnaryCall(
           getChannel().newCall(getSayHelloMethod(), getCallOptions()), request);
     }
+
+    /**
+     * <pre>
+     * req and response will be encrypted
+     * </pre>
+     */
+    public com.google.common.util.concurrent.ListenableFuture<com.ullas.grpcEncryption.EncryptedMessageReqRes> sayEncryptedHello(
+        com.ullas.grpcEncryption.EncryptedMessageReqRes request) {
+      return futureUnaryCall(
+          getChannel().newCall(getSayEncryptedHelloMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_SAY_HELLO = 0;
+  private static final int METHODID_SAY_ENCRYPTED_HELLO = 1;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -243,6 +324,10 @@ public final class GreeterGrpc {
         case METHODID_SAY_HELLO:
           serviceImpl.sayHello((com.ullas.grpcEncryption.HelloRequest) request,
               (io.grpc.stub.StreamObserver<com.ullas.grpcEncryption.HelloResponse>) responseObserver);
+          break;
+        case METHODID_SAY_ENCRYPTED_HELLO:
+          serviceImpl.sayEncryptedHello((com.ullas.grpcEncryption.EncryptedMessageReqRes) request,
+              (io.grpc.stub.StreamObserver<com.ullas.grpcEncryption.EncryptedMessageReqRes>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -306,6 +391,7 @@ public final class GreeterGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new GreeterFileDescriptorSupplier())
               .addMethod(getSayHelloMethod())
+              .addMethod(getSayEncryptedHelloMethod())
               .build();
         }
       }
