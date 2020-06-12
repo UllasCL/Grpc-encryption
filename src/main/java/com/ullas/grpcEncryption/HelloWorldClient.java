@@ -5,7 +5,6 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import java.security.InvalidKeyException;
 import java.security.Key;
-import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -97,13 +96,13 @@ public class HelloWorldClient {
    * @return the string
    * @throws Exception the exception
    */
-  public static <T> String encrypt(T data) throws Exception {
+  public static <T> byte[] encrypt(T data) throws Exception {
     Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
     Cipher cipher = Cipher.getInstance("AES");
     // encrypt the text
     cipher.init(Cipher.ENCRYPT_MODE, aesKey);
     byte[] encrypted = cipher.doFinal(data.toString().getBytes());
-    return Arrays.toString(encrypted);
+    return encrypted;
   }
 
   public static List<Integer> encryptCheck(HelloRequest data) {
@@ -165,8 +164,7 @@ public class HelloWorldClient {
       }
       EncryptedMessageReqRes encReq =
           EncryptedMessageReqRes.newBuilder()
-
-              .setPayload(ByteString.copyFrom(encReq1))
+              .setPayload(ByteString.copyFrom(encrypt(request)))
               .build();
       EncryptedMessageReqRes response = blockingStub.sayEncryptedHello(encReq);
       logger.info("Response: " + response.getPayload());
