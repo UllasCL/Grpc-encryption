@@ -240,7 +240,7 @@ public class HelloWorldServer {
       byte[] encReq2 = new byte[request.getPayload().toByteArray().length];
 
       for (int i = 0; i < request.getPayload().toByteArray().length; i++) {
-        encReq2[i] = (byte) (request.getPayload().toByteArray()[i]/1);
+        encReq2[i] = request.getPayload().toByteArray()[i];
       }
       HelloRequest reqFromClient = null;
       try {

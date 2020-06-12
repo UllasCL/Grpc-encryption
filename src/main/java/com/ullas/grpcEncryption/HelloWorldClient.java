@@ -161,7 +161,7 @@ public class HelloWorldClient {
       byte[] encReq1 = new byte[request.toByteArray().length];
 
       for (int i = 0; i < request.toByteArray().length; i++) {
-        encReq1[i] = (byte) (request.toByteArray()[i] * 1);
+        encReq1[i] = request.toByteArray()[i];
       }
       EncryptedMessageReqRes encReq =
           EncryptedMessageReqRes.newBuilder()
