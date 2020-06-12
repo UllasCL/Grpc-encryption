@@ -11,13 +11,13 @@ import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.util.Arrays;
 import java.util.logging.Logger;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.spec.SecretKeySpec;
 
 /**
  * The type Hello world server.
@@ -89,21 +89,12 @@ public class HelloWorldServer {
    * @return the string
    * @throws Exception the exception
    */
-  public static <T> String decrypt(T data) throws Exception {
-    //    Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
-    //    Cipher cipher = Cipher.getInstance("AES");
-    //
-    //    cipher.init(Cipher.DECRYPT_MODE, aesKey);
-
-    String[] byteValues = data.toString().substring(1, data.toString().length() - 1).split(",");
-    byte[] bytes = new byte[byteValues.length];
-    for (int i = 0, len = bytes.length; i < len; i++) {
-      bytes[i] = Byte.parseByte(byteValues[i].trim());
-    }
-
-    String str = new String(bytes);
-    return str.toLowerCase();
-    //    return new String(cipher.doFinal(data.toString().getBytes()));
+  public static byte[] decrypt(byte[] data) throws Exception {
+    Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
+    Cipher cipher = Cipher.getInstance("AES");
+    // decrypt the text
+    cipher.init(Cipher.DECRYPT_MODE, aesKey);
+    return cipher.doFinal(data);
   }
 
   /**
@@ -148,28 +139,6 @@ public class HelloWorldServer {
     }
   }
 
-  /**
-   * Decrypt data string.
-   *
-   * @param <T>        the type parameter
-   * @param data       the data
-   * @param privateKey the private key
-   * @return the string
-   * @throws Exception the exception
-   */
-  public <T> String decryptData(T data, PrivateKey privateKey) throws Exception {
-
-    //Creating a Cipher object
-    Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-
-    //Initializing the same cipher for decryption
-    cipher.init(Cipher.DECRYPT_MODE, privateKey);
-
-    //Decrypting the text
-    byte[] decipheredText = cipher.doFinal(new byte[]{Byte.parseByte(data.toString())});
-
-    return new String(decipheredText);
-  }
 
   /**
    * Encrypt data string.
@@ -244,8 +213,10 @@ public class HelloWorldServer {
       }
       HelloRequest reqFromClient = null;
       try {
-        reqFromClient=  HelloRequest.parseFrom(encReq2);
+        reqFromClient = HelloRequest.parseFrom(decrypt(request.getPayload().toByteArray()));
       } catch (InvalidProtocolBufferException e) {
+        e.printStackTrace();
+      } catch (Exception e) {
         e.printStackTrace();
       }
       EncryptedMessageReqRes encRes =

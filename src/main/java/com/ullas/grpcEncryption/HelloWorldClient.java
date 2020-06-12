@@ -3,17 +3,11 @@ package com.ullas.grpcEncryption;
 import com.google.protobuf.ByteString;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import java.security.InvalidKeyException;
 import java.security.Key;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
@@ -69,24 +63,6 @@ public class HelloWorldClient {
     }
   }
 
-  /**
-   * Encrypt f byte [ ].
-   *
-   * @param input the input
-   * @param pkey  the pkey
-   * @param c     the c
-   * @return the byte [ ]
-   * @throws InvalidKeyException       the invalid key exception
-   * @throws BadPaddingException       the bad padding exception
-   * @throws IllegalBlockSizeException the illegal block size exception
-   */
-  private static byte[] encryptF(String input, Key pkey, Cipher c) throws InvalidKeyException,
-                                                                          BadPaddingException,
-                                                                          IllegalBlockSizeException {
-    c.init(Cipher.ENCRYPT_MODE, pkey);
-    byte[] inputBytes = input.getBytes();
-    return c.doFinal(inputBytes);
-  }
 
   /**
    * Encrypt string.
@@ -96,26 +72,13 @@ public class HelloWorldClient {
    * @return the string
    * @throws Exception the exception
    */
-  public static <T> byte[] encrypt(T data) throws Exception {
+  public static byte[] encrypt(byte[] data) throws Exception {
     Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
     Cipher cipher = Cipher.getInstance("AES");
     // encrypt the text
     cipher.init(Cipher.ENCRYPT_MODE, aesKey);
-    byte[] encrypted = cipher.doFinal(data.toString().getBytes());
+    byte[] encrypted = cipher.doFinal(data);
     return encrypted;
-  }
-
-  public static List<Integer> encryptCheck(HelloRequest data) {
-    data.toByteArray();
-    List<Integer> list =
-        IntStream.range(0, data.toByteArray().length).map(i -> data.toByteArray()[i]).boxed()
-            .collect(Collectors.toList());
-    return _encryptBytes(list);
-  }
-
-  static List<Integer> _encryptBytes(List<Integer> message) {
-    return message.stream()
-        .map(e -> e * 2).collect(Collectors.toList());
   }
 
   /**
@@ -164,7 +127,7 @@ public class HelloWorldClient {
       }
       EncryptedMessageReqRes encReq =
           EncryptedMessageReqRes.newBuilder()
-              .setPayload(ByteString.copyFrom(encrypt(request)))
+              .setPayload(ByteString.copyFrom(encrypt(request.toByteArray())))
               .build();
       EncryptedMessageReqRes response = blockingStub.sayEncryptedHello(encReq);
       logger.info("Response: " + response.getPayload());
