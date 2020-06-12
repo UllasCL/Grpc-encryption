@@ -2,8 +2,8 @@ package com.ullas.grpcEncryption;
 
 
 import com.google.protobuf.ByteString;
-import com.google.protobuf.InvalidProtocolBufferException;
 import com.ullas.grpcEncryption.GreeterGrpc.GreeterImplBase;
+import com.ullas.grpcEncryption.utils.AesEncryptionUtil;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
@@ -28,10 +28,6 @@ public class HelloWorldServer {
    * The constant logger.
    */
   private static final Logger logger = Logger.getLogger(HelloWorldServer.class.getName());
-  /**
-   * The constant key.
-   */
-  private static final String key = "Bar12345Bar12345";
 
   /**
    * The Port.
@@ -54,47 +50,6 @@ public class HelloWorldServer {
 
     helloWorldServer.start();
     helloWorldServer.blockUntilShutdown();
-  }
-
-  /**
-   * Decrypt f string.
-   *
-   * @param encryptionBytes the encryption bytes
-   * @param pkey            the pkey
-   * @param c               the c
-   * @return the string
-   * @throws InvalidKeyException       the invalid key exception
-   * @throws BadPaddingException       the bad padding exception
-   * @throws IllegalBlockSizeException the illegal block size exception
-   */
-  private static String decryptF(byte[] encryptionBytes, Key pkey, Cipher c)
-      throws InvalidKeyException,
-
-             BadPaddingException, IllegalBlockSizeException {
-
-    c.init(Cipher.DECRYPT_MODE, pkey);
-
-    byte[] decrypt = c.doFinal(encryptionBytes);
-
-    String decrypted = new String(decrypt);
-
-    return decrypted;
-  }
-
-  /**
-   * Decrypt string.
-   *
-   * @param <T>  the type parameter
-   * @param data the data
-   * @return the string
-   * @throws Exception the exception
-   */
-  public static byte[] decrypt(byte[] data) throws Exception {
-    Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
-    Cipher cipher = Cipher.getInstance("AES");
-    // decrypt the text
-    cipher.init(Cipher.DECRYPT_MODE, aesKey);
-    return cipher.doFinal(data);
   }
 
   /**
@@ -139,44 +94,6 @@ public class HelloWorldServer {
     }
   }
 
-
-  /**
-   * Encrypt data string.
-   *
-   * @param <T>  the type parameter
-   * @param data the data
-   * @return the string
-   * @throws Exception the exception
-   */
-  public <T> String encryptData(T data) throws Exception {
-    //Creating KeyPair generator object
-    KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance("RSA");
-
-    //Initializing the key pair generator
-    keyPairGen.initialize(2048);
-
-    //Generate the pair of keys
-    KeyPair pair = keyPairGen.generateKeyPair();
-
-    //Getting the public key from the key pair
-    PublicKey publicKey = pair.getPublic();
-
-    //Creating a Cipher object
-    Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-
-    //Initializing a Cipher object
-    cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-
-    //Add data to the cipher
-    byte[] input = data.toString().getBytes();
-    cipher.update(input);
-
-    //encrypting the data
-    byte[] cipherText = cipher.doFinal();
-
-    return new String(cipherText, "UTF8");
-  }
-
   /**
    * The type Greeter.
    */
@@ -206,16 +123,10 @@ public class HelloWorldServer {
     public void sayEncryptedHello(EncryptedMessageReqRes request,
                                   StreamObserver<EncryptedMessageReqRes> responseObserver) {
       HelloResponse response;
-      byte[] encReq2 = new byte[request.getPayload().toByteArray().length];
-
-      for (int i = 0; i < request.getPayload().toByteArray().length; i++) {
-        encReq2[i] = request.getPayload().toByteArray()[i];
-      }
       HelloRequest reqFromClient = null;
       try {
-        reqFromClient = HelloRequest.parseFrom(decrypt(request.getPayload().toByteArray()));
-      } catch (InvalidProtocolBufferException e) {
-        e.printStackTrace();
+        reqFromClient =
+            HelloRequest.parseFrom(AesEncryptionUtil.decrypt(request.getPayload().toByteArray()));
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -226,7 +137,7 @@ public class HelloWorldServer {
             "hello " + reqFromClient.getName()
         ).build();
         encRes = EncryptedMessageReqRes.newBuilder().setPayload(
-            ByteString.copyFrom(response.toByteArray()))
+            ByteString.copyFrom(AesEncryptionUtil.encrypt(response.toByteArray())))
             .build();
       } catch (Exception e) {
         e.printStackTrace();

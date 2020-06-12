@@ -1,14 +1,12 @@
 package com.ullas.grpcEncryption;
 
 import com.google.protobuf.ByteString;
+import com.ullas.grpcEncryption.utils.AesEncryptionUtil;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
-import java.security.Key;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.crypto.Cipher;
-import javax.crypto.spec.SecretKeySpec;
 
 /**
  * The type Hello world client.
@@ -56,29 +54,9 @@ public class HelloWorldClient {
 
     try {
       client.greetEncrypted(name);
-
-      client.greetEncrypted(name);
     } finally {
       client.shutdown();
     }
-  }
-
-
-  /**
-   * Encrypt string.
-   *
-   * @param <T>  the type parameter
-   * @param data the data
-   * @return the string
-   * @throws Exception the exception
-   */
-  public static byte[] encrypt(byte[] data) throws Exception {
-    Key aesKey = new SecretKeySpec(key.getBytes(), "AES");
-    Cipher cipher = Cipher.getInstance("AES");
-    // encrypt the text
-    cipher.init(Cipher.ENCRYPT_MODE, aesKey);
-    byte[] encrypted = cipher.doFinal(data);
-    return encrypted;
   }
 
   /**
@@ -91,25 +69,6 @@ public class HelloWorldClient {
   }
 
   /**
-   * Greet.
-   *
-   * @param name the name
-   */
-  public void greet(String name) {
-    logger.info("Trying to greet " + name);
-    try {
-      HelloRequest request = HelloRequest.newBuilder().setName(name).build();
-
-      HelloResponse response = blockingStub.sayHello(request);
-      logger.info("Response: " + response.getMessage());
-    } catch (RuntimeException e) {
-      logger.log(Level.WARNING, "Request to grpc server failed", e);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  /**
    * Greet encrypted.
    *
    * @param name the name
@@ -118,19 +77,14 @@ public class HelloWorldClient {
     logger.info("Trying to greet " + name);
     try {
       HelloRequest request = HelloRequest.newBuilder().setName(name).build();
-      //      encryptCheck(request);
-      request.toByteArray();
-      byte[] encReq1 = new byte[request.toByteArray().length];
-
-      for (int i = 0; i < request.toByteArray().length; i++) {
-        encReq1[i] = request.toByteArray()[i];
-      }
       EncryptedMessageReqRes encReq =
           EncryptedMessageReqRes.newBuilder()
-              .setPayload(ByteString.copyFrom(encrypt(request.toByteArray())))
+              .setPayload(ByteString.copyFrom(AesEncryptionUtil.encrypt(request.toByteArray())))
               .build();
       EncryptedMessageReqRes response = blockingStub.sayEncryptedHello(encReq);
-      logger.info("Response: " + response.getPayload());
+      HelloResponse responseFromServer =
+          HelloResponse.parseFrom(AesEncryptionUtil.decrypt(response.getPayload().toByteArray()));
+      logger.info("Response: " + responseFromServer);
     } catch (RuntimeException e) {
       logger.log(Level.WARNING, "Request to grpc server failed", e);
     } catch (Exception e) {
