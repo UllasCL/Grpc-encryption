@@ -116,4 +116,28 @@ public final class EncryptionUtil {
     }
     return kf.generatePrivate(privateKeySpec);
   }
+
+  public static String getDecryptedStringPrivateKey(String text, PrivateKey privateKey) {
+    Cipher cipher = null; //or try with "RSA"
+    try {
+      cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+    } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+      e.printStackTrace();
+    }
+    try {
+      if (cipher != null) {
+        cipher.init(Cipher.DECRYPT_MODE, privateKey);
+      }
+    } catch (InvalidKeyException e) {
+      e.printStackTrace();
+    }
+    byte[] encrypted = Base64.getDecoder().decode(text);
+    String finalString = null;
+    try {
+      finalString = new String(cipher.doFinal(encrypted), UTF_8);
+    } catch (BadPaddingException | IllegalBlockSizeException e) {
+      e.printStackTrace();
+    }
+    return finalString;
+  }
 }

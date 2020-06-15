@@ -1,5 +1,3 @@
-package com.ullas.grpcEncryption;
-
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 import static io.grpc.stub.ClientCalls.asyncBidiStreamingCall;
 import static io.grpc.stub.ClientCalls.asyncClientStreamingCall;
@@ -24,32 +22,32 @@ public final class TestServiceGrpc {
 
   private TestServiceGrpc() {}
 
-  public static final String SERVICE_NAME = "message.TestService";
+  public static final String SERVICE_NAME = "TestService";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<com.ullas.grpcEncryption.EncryptedMessage,
-      com.ullas.grpcEncryption.EncryptedMessage> getGetConfigMethod;
+  private static volatile io.grpc.MethodDescriptor<Message.EncryptedMessage,
+      Message.EncryptedMessage> getGetConfigMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetConfig",
-      requestType = com.ullas.grpcEncryption.EncryptedMessage.class,
-      responseType = com.ullas.grpcEncryption.EncryptedMessage.class,
+      requestType = Message.EncryptedMessage.class,
+      responseType = Message.EncryptedMessage.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.ullas.grpcEncryption.EncryptedMessage,
-      com.ullas.grpcEncryption.EncryptedMessage> getGetConfigMethod() {
-    io.grpc.MethodDescriptor<com.ullas.grpcEncryption.EncryptedMessage, com.ullas.grpcEncryption.EncryptedMessage> getGetConfigMethod;
+  public static io.grpc.MethodDescriptor<Message.EncryptedMessage,
+      Message.EncryptedMessage> getGetConfigMethod() {
+    io.grpc.MethodDescriptor<Message.EncryptedMessage, Message.EncryptedMessage> getGetConfigMethod;
     if ((getGetConfigMethod = TestServiceGrpc.getGetConfigMethod) == null) {
       synchronized (TestServiceGrpc.class) {
         if ((getGetConfigMethod = TestServiceGrpc.getGetConfigMethod) == null) {
           TestServiceGrpc.getGetConfigMethod = getGetConfigMethod =
-              io.grpc.MethodDescriptor.<com.ullas.grpcEncryption.EncryptedMessage, com.ullas.grpcEncryption.EncryptedMessage>newBuilder()
+              io.grpc.MethodDescriptor.<Message.EncryptedMessage, Message.EncryptedMessage>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetConfig"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.ullas.grpcEncryption.EncryptedMessage.getDefaultInstance()))
+                  Message.EncryptedMessage.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.ullas.grpcEncryption.EncryptedMessage.getDefaultInstance()))
+                  Message.EncryptedMessage.getDefaultInstance()))
               .setSchemaDescriptor(new TestServiceMethodDescriptorSupplier("GetConfig"))
               .build();
         }
@@ -58,29 +56,29 @@ public final class TestServiceGrpc {
     return getGetConfigMethod;
   }
 
-  private static volatile io.grpc.MethodDescriptor<com.ullas.grpcEncryption.EncryptedMessage,
-      com.ullas.grpcEncryption.EncryptedMessage> getGetUserMethod;
+  private static volatile io.grpc.MethodDescriptor<Message.EncryptedMessage,
+      Message.EncryptedMessage> getGetUserMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetUser",
-      requestType = com.ullas.grpcEncryption.EncryptedMessage.class,
-      responseType = com.ullas.grpcEncryption.EncryptedMessage.class,
+      requestType = Message.EncryptedMessage.class,
+      responseType = Message.EncryptedMessage.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<com.ullas.grpcEncryption.EncryptedMessage,
-      com.ullas.grpcEncryption.EncryptedMessage> getGetUserMethod() {
-    io.grpc.MethodDescriptor<com.ullas.grpcEncryption.EncryptedMessage, com.ullas.grpcEncryption.EncryptedMessage> getGetUserMethod;
+  public static io.grpc.MethodDescriptor<Message.EncryptedMessage,
+      Message.EncryptedMessage> getGetUserMethod() {
+    io.grpc.MethodDescriptor<Message.EncryptedMessage, Message.EncryptedMessage> getGetUserMethod;
     if ((getGetUserMethod = TestServiceGrpc.getGetUserMethod) == null) {
       synchronized (TestServiceGrpc.class) {
         if ((getGetUserMethod = TestServiceGrpc.getGetUserMethod) == null) {
           TestServiceGrpc.getGetUserMethod = getGetUserMethod =
-              io.grpc.MethodDescriptor.<com.ullas.grpcEncryption.EncryptedMessage, com.ullas.grpcEncryption.EncryptedMessage>newBuilder()
+              io.grpc.MethodDescriptor.<Message.EncryptedMessage, Message.EncryptedMessage>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetUser"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.ullas.grpcEncryption.EncryptedMessage.getDefaultInstance()))
+                  Message.EncryptedMessage.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  com.ullas.grpcEncryption.EncryptedMessage.getDefaultInstance()))
+                  Message.EncryptedMessage.getDefaultInstance()))
               .setSchemaDescriptor(new TestServiceMethodDescriptorSupplier("GetUser"))
               .build();
         }
@@ -142,8 +140,8 @@ public final class TestServiceGrpc {
      *    rpc GetConfig (Request1) returns (Response1);
      * </pre>
      */
-    public void getConfig(com.ullas.grpcEncryption.EncryptedMessage request,
-        io.grpc.stub.StreamObserver<com.ullas.grpcEncryption.EncryptedMessage> responseObserver) {
+    public void getConfig(Message.EncryptedMessage request,
+        io.grpc.stub.StreamObserver<Message.EncryptedMessage> responseObserver) {
       asyncUnimplementedUnaryCall(getGetConfigMethod(), responseObserver);
     }
 
@@ -152,8 +150,8 @@ public final class TestServiceGrpc {
      *    rpc GetUser (Request2) returns (Response2);
      * </pre>
      */
-    public void getUser(com.ullas.grpcEncryption.EncryptedMessage request,
-        io.grpc.stub.StreamObserver<com.ullas.grpcEncryption.EncryptedMessage> responseObserver) {
+    public void getUser(Message.EncryptedMessage request,
+        io.grpc.stub.StreamObserver<Message.EncryptedMessage> responseObserver) {
       asyncUnimplementedUnaryCall(getGetUserMethod(), responseObserver);
     }
 
@@ -163,15 +161,15 @@ public final class TestServiceGrpc {
             getGetConfigMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.ullas.grpcEncryption.EncryptedMessage,
-                com.ullas.grpcEncryption.EncryptedMessage>(
+                Message.EncryptedMessage,
+                Message.EncryptedMessage>(
                   this, METHODID_GET_CONFIG)))
           .addMethod(
             getGetUserMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                com.ullas.grpcEncryption.EncryptedMessage,
-                com.ullas.grpcEncryption.EncryptedMessage>(
+                Message.EncryptedMessage,
+                Message.EncryptedMessage>(
                   this, METHODID_GET_USER)))
           .build();
     }
@@ -196,8 +194,8 @@ public final class TestServiceGrpc {
      *    rpc GetConfig (Request1) returns (Response1);
      * </pre>
      */
-    public void getConfig(com.ullas.grpcEncryption.EncryptedMessage request,
-        io.grpc.stub.StreamObserver<com.ullas.grpcEncryption.EncryptedMessage> responseObserver) {
+    public void getConfig(Message.EncryptedMessage request,
+        io.grpc.stub.StreamObserver<Message.EncryptedMessage> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetConfigMethod(), getCallOptions()), request, responseObserver);
     }
@@ -207,8 +205,8 @@ public final class TestServiceGrpc {
      *    rpc GetUser (Request2) returns (Response2);
      * </pre>
      */
-    public void getUser(com.ullas.grpcEncryption.EncryptedMessage request,
-        io.grpc.stub.StreamObserver<com.ullas.grpcEncryption.EncryptedMessage> responseObserver) {
+    public void getUser(Message.EncryptedMessage request,
+        io.grpc.stub.StreamObserver<Message.EncryptedMessage> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(getGetUserMethod(), getCallOptions()), request, responseObserver);
     }
@@ -233,7 +231,7 @@ public final class TestServiceGrpc {
      *    rpc GetConfig (Request1) returns (Response1);
      * </pre>
      */
-    public com.ullas.grpcEncryption.EncryptedMessage getConfig(com.ullas.grpcEncryption.EncryptedMessage request) {
+    public Message.EncryptedMessage getConfig(Message.EncryptedMessage request) {
       return blockingUnaryCall(
           getChannel(), getGetConfigMethod(), getCallOptions(), request);
     }
@@ -243,7 +241,7 @@ public final class TestServiceGrpc {
      *    rpc GetUser (Request2) returns (Response2);
      * </pre>
      */
-    public com.ullas.grpcEncryption.EncryptedMessage getUser(com.ullas.grpcEncryption.EncryptedMessage request) {
+    public Message.EncryptedMessage getUser(Message.EncryptedMessage request) {
       return blockingUnaryCall(
           getChannel(), getGetUserMethod(), getCallOptions(), request);
     }
@@ -268,8 +266,8 @@ public final class TestServiceGrpc {
      *    rpc GetConfig (Request1) returns (Response1);
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.ullas.grpcEncryption.EncryptedMessage> getConfig(
-        com.ullas.grpcEncryption.EncryptedMessage request) {
+    public com.google.common.util.concurrent.ListenableFuture<Message.EncryptedMessage> getConfig(
+        Message.EncryptedMessage request) {
       return futureUnaryCall(
           getChannel().newCall(getGetConfigMethod(), getCallOptions()), request);
     }
@@ -279,8 +277,8 @@ public final class TestServiceGrpc {
      *    rpc GetUser (Request2) returns (Response2);
      * </pre>
      */
-    public com.google.common.util.concurrent.ListenableFuture<com.ullas.grpcEncryption.EncryptedMessage> getUser(
-        com.ullas.grpcEncryption.EncryptedMessage request) {
+    public com.google.common.util.concurrent.ListenableFuture<Message.EncryptedMessage> getUser(
+        Message.EncryptedMessage request) {
       return futureUnaryCall(
           getChannel().newCall(getGetUserMethod(), getCallOptions()), request);
     }
@@ -307,12 +305,12 @@ public final class TestServiceGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_GET_CONFIG:
-          serviceImpl.getConfig((com.ullas.grpcEncryption.EncryptedMessage) request,
-              (io.grpc.stub.StreamObserver<com.ullas.grpcEncryption.EncryptedMessage>) responseObserver);
+          serviceImpl.getConfig((Message.EncryptedMessage) request,
+              (io.grpc.stub.StreamObserver<Message.EncryptedMessage>) responseObserver);
           break;
         case METHODID_GET_USER:
-          serviceImpl.getUser((com.ullas.grpcEncryption.EncryptedMessage) request,
-              (io.grpc.stub.StreamObserver<com.ullas.grpcEncryption.EncryptedMessage>) responseObserver);
+          serviceImpl.getUser((Message.EncryptedMessage) request,
+              (io.grpc.stub.StreamObserver<Message.EncryptedMessage>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -336,7 +334,7 @@ public final class TestServiceGrpc {
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return com.ullas.grpcEncryption.MessageProto.getDescriptor();
+      return Message.getDescriptor();
     }
 
     @java.lang.Override
