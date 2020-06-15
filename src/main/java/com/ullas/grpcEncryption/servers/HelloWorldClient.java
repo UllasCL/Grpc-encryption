@@ -25,7 +25,6 @@ import org.springframework.stereotype.Service;
 /**
  * The type Hello world client.
  */
-@Service
 public class HelloWorldClient {
   /**
    * The constant logger.
