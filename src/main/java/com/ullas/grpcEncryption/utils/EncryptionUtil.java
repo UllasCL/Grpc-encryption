@@ -6,6 +6,7 @@ import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
+import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
@@ -26,6 +27,10 @@ public final class EncryptionUtil {
    * The constant LOGGER.
    */
   public static final Logger LOGGER = LoggerFactory.getLogger(EncryptionUtil.class);
+  /**
+   * The constant PUBLIC_KEY.
+   */
+  public static String public_key = "";
 
   /**
    * Gets encrypted string.
@@ -56,9 +61,7 @@ public final class EncryptionUtil {
     byte[] encrypted = null;
     try {
       encrypted = cipher.doFinal(request.getBytes(UTF_8));
-    } catch (BadPaddingException e) {
-      e.printStackTrace();
-    } catch (IllegalBlockSizeException e) {
+    } catch (BadPaddingException | IllegalBlockSizeException e) {
       e.printStackTrace();
     }
     return Base64.getEncoder().encodeToString(encrypted);
@@ -67,22 +70,20 @@ public final class EncryptionUtil {
   /**
    * Gets decrypted string.
    *
-   * @param text       the text
-   * @param privateKey the private key
+   * @param text      the text
+   * @param publicKey the public key
    * @return the decrypted string
    */
-  public static String getDecryptedString(String text, PrivateKey privateKey) {
+  public static String getDecryptedString(String text, PublicKey publicKey) {
     Cipher cipher = null; //or try with "RSA"
     try {
       cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-    } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-    } catch (NoSuchPaddingException e) {
+    } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
       e.printStackTrace();
     }
     try {
       if (cipher != null) {
-        cipher.init(Cipher.DECRYPT_MODE, privateKey);
+        cipher.init(Cipher.DECRYPT_MODE, publicKey);
       }
     } catch (InvalidKeyException e) {
       e.printStackTrace();
@@ -91,14 +92,11 @@ public final class EncryptionUtil {
     String finalString = null;
     try {
       finalString = new String(cipher.doFinal(encrypted), UTF_8);
-    } catch (BadPaddingException e) {
-      e.printStackTrace();
-    } catch (IllegalBlockSizeException e) {
+    } catch (BadPaddingException | IllegalBlockSizeException e) {
       e.printStackTrace();
     }
     return finalString;
   }
-
 
   /**
    * Gets private key.

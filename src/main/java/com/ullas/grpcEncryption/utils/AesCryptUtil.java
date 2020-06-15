@@ -26,30 +26,6 @@ public final class AesCryptUtil {
   private static SecretKeySpec secretKey;
 
   /**
-   * The Key.
-   */
-  private static byte[] key;
-
-
-  /**
-   * Sets key.
-   *
-   * @param myKey the my key
-   */
-  public static void setKey(String myKey) {
-    MessageDigest sha = null;
-    try {
-      key = myKey.getBytes("UTF-8");
-      sha = MessageDigest.getInstance("SHA-1");
-      key = sha.digest(key);
-      key = Arrays.copyOf(key, 16);
-      secretKey = new SecretKeySpec(key, "AES");
-    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
-      LOGGER.info(e.getMessage());
-    }
-  }
-
-  /**
    * Decrypt string.
    *
    * @param bytesToDecrypt the bytes to decrypt

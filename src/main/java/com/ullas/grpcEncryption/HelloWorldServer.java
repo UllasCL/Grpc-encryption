@@ -3,21 +3,19 @@ package com.ullas.grpcEncryption;
 
 import com.google.protobuf.ByteString;
 import com.ullas.grpcEncryption.GreeterGrpc.GreeterImplBase;
+import com.ullas.grpcEncryption.utils.AesCryptUtil;
 import com.ullas.grpcEncryption.utils.AesEncryptionUtil;
+import com.ullas.grpcEncryption.utils.EncryptionUtil;
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
-import java.security.InvalidKeyException;
-import java.security.Key;
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
+import java.security.GeneralSecurityException;
+import java.security.KeyFactory;
 import java.security.PublicKey;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
+import java.util.Base64;
 import java.util.logging.Logger;
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.spec.SecretKeySpec;
 
 /**
  * The type Hello world server.
@@ -29,6 +27,15 @@ public class HelloWorldServer {
    */
   private static final Logger logger = Logger.getLogger(HelloWorldServer.class.getName());
 
+  /**
+   * The constant public_key.
+   */
+  private static String public_key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApHqn6dyRf6GSk"
+      + "/XBwT1lSFAgKq12L2wmZgxgkLIFidJjva1YgxI5/uGKouRpBHH5C7GxRuuoYLZaPR3tcYgjxdBrFfe2AFvJS"
+      + "/qkhIRvQ5TUxKiti5UcoT6rBfAw0Pncvu65NzuQNWcyYNBpTLasdUnvaf1t2arpTUg0JCdQAfuRacZn3//PHjvL"
+      + "+IG0CCO51RL9vBXUOEtS7APvIhok708hkOre5lIC5WcvwtVvCyc/fQq7VPK6GaU7woLSxHb"
+      + "+QGmGRQzWd7PNsnA3gCAUQ7waXznvZSngnTi4VEdUebkWoyVjfwhf+1yIebFpL1"
+      + "/jamBy9fkD99HuFlTTBc22vwIDAQAB";
   /**
    * The Port.
    */
@@ -50,6 +57,38 @@ public class HelloWorldServer {
 
     helloWorldServer.start();
     helloWorldServer.blockUntilShutdown();
+  }
+
+  /**
+   * Generate random encryption key string.
+   *
+   * @param publicKeyForDecryption the public key for decryption
+   * @param encRendomKey           the enc rendom key
+   * @return the string
+   */
+  private static String getRandomDecryptionKey(String publicKeyForDecryption,
+                                               String encRendomKey) {
+    try {
+      return EncryptionUtil.getDecryptedString(encRendomKey,
+          getPublicKeyFromString(publicKeyForDecryption));
+    } catch (GeneralSecurityException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
+  /**
+   * Gets public key from string.
+   *
+   * @param stored the stored
+   * @return the public key from string
+   * @throws GeneralSecurityException the general security exception
+   */
+  private static PublicKey getPublicKeyFromString(String stored) throws GeneralSecurityException {
+    byte[] data = Base64.getDecoder().decode((stored.getBytes()));
+    X509EncodedKeySpec spec = new X509EncodedKeySpec(data);
+    KeyFactory fact = KeyFactory.getInstance("RSA");
+    return fact.generatePublic(spec);
   }
 
   /**
@@ -122,11 +161,13 @@ public class HelloWorldServer {
     @Override
     public void sayEncryptedHello(EncryptedMessageReqRes request,
                                   StreamObserver<EncryptedMessageReqRes> responseObserver) {
+      String secretkey = getRandomDecryptionKey(public_key, request.getEncRandomKey());
       HelloResponse response;
       HelloRequest reqFromClient = null;
       try {
         reqFromClient =
-            HelloRequest.parseFrom(AesEncryptionUtil.decrypt(request.getPayload().toByteArray()));
+            HelloRequest.parseFrom(AesCryptUtil.decrypt(request.getPayload().toByteArray(),
+                secretkey));
       } catch (Exception e) {
         e.printStackTrace();
       }
