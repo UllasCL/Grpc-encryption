@@ -1,6 +1,10 @@
-package com.ullas.grpcEncryption;
+package com.ullas.grpcEncryption.servers;
 
 import com.google.protobuf.ByteString;
+import com.ullas.grpcEncryption.EncryptedMessageReqRes;
+import com.ullas.grpcEncryption.GreeterGrpc;
+import com.ullas.grpcEncryption.HelloRequest;
+import com.ullas.grpcEncryption.HelloResponse;
 import com.ullas.grpcEncryption.utils.AesCryptUtil;
 import com.ullas.grpcEncryption.utils.AesEncryptionUtil;
 import com.ullas.grpcEncryption.utils.EncryptionUtil;

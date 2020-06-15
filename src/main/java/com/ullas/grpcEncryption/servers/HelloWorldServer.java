@@ -1,8 +1,12 @@
-package com.ullas.grpcEncryption;
+package com.ullas.grpcEncryption.servers;
 
 
 import com.google.protobuf.ByteString;
+import com.ullas.grpcEncryption.EncryptedMessageReqRes;
 import com.ullas.grpcEncryption.GreeterGrpc.GreeterImplBase;
+import com.ullas.grpcEncryption.HelloRequest;
+import com.ullas.grpcEncryption.HelloResponse;
+import com.ullas.grpcEncryption.interceptors.GrpcServerJwtInterceptor;
 import com.ullas.grpcEncryption.utils.AesCryptUtil;
 import com.ullas.grpcEncryption.utils.AesEncryptionUtil;
 import com.ullas.grpcEncryption.utils.EncryptionUtil;
@@ -16,10 +20,12 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.logging.Logger;
+import org.lognet.springboot.grpc.GRpcService;
 
 /**
  * The type Hello world server.
  */
+@GRpcService(interceptors = {GrpcServerJwtInterceptor.class})
 public class HelloWorldServer {
 
   /**

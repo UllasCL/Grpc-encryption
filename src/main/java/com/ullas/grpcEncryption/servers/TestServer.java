@@ -1,6 +1,9 @@
-package com.ullas.grpcEncryption;
+package com.ullas.grpcEncryption.servers;
 
 import com.google.protobuf.ByteString;
+import com.ullas.grpcEncryption.EncryptedMessage;
+import com.ullas.grpcEncryption.Request1;
+import com.ullas.grpcEncryption.Response1;
 import com.ullas.grpcEncryption.TestServiceGrpc.TestServiceImplBase;
 import com.ullas.grpcEncryption.utils.AesCryptUtil;
 import com.ullas.grpcEncryption.utils.AesEncryptionUtil;
@@ -28,7 +31,7 @@ public class TestServer {
    * The constant logger.
    */
   private static final Logger logger = Logger.getLogger(
-      com.ullas.grpcEncryption.HelloWorldServer.class.getName());
+      HelloWorldServer.class.getName());
 
   /**
    * The constant public_key.
