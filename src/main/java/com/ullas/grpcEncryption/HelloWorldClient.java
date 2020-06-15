@@ -17,10 +17,6 @@ public class HelloWorldClient {
    */
   private static final Logger logger = Logger.getLogger(HelloWorldClient.class.getName());
   /**
-   * The constant key.
-   */
-  private static final String key = "Bar12345Bar12345";
-  /**
    * The Channel.
    */
   private final ManagedChannel channel;
