@@ -40,14 +40,14 @@ public final class HelloWorldProto {
     java.lang.String[] descriptorData = {
       "\n\021hello_world.proto\022\nhelloworld\"\034\n\014Hello" +
       "Request\022\014\n\004name\030\001 \001(\t\" \n\rHelloResponse\022\017" +
-      "\n\007message\030\001 \001(\t\")\n\026EncryptedMessageReqRe" +
-      "s\022\017\n\007payload\030\002 \001(\0142\253\001\n\007Greeter\022A\n\010SayHel" +
-      "lo\022\030.helloworld.HelloRequest\032\031.helloworl" +
-      "d.HelloResponse\"\000\022]\n\021SayEncryptedHello\022\"" +
-      ".helloworld.EncryptedMessageReqRes\032\".hel" +
-      "loworld.EncryptedMessageReqRes\"\000B-\n\030com." +
-      "ullas.grpcEncryptionB\017HelloWorldProtoP\001b" +
-      "\006proto3"
+      "\n\007message\030\001 \001(\t\"?\n\026EncryptedMessageReqRe" +
+      "s\022\017\n\007payload\030\001 \001(\014\022\024\n\014encRandomKey\030\002 \001(\t" +
+      "2\253\001\n\007Greeter\022A\n\010SayHello\022\030.helloworld.He" +
+      "lloRequest\032\031.helloworld.HelloResponse\"\000\022" +
+      "]\n\021SayEncryptedHello\022\".helloworld.Encryp" +
+      "tedMessageReqRes\032\".helloworld.EncryptedM" +
+      "essageReqRes\"\000B-\n\030com.ullas.grpcEncrypti" +
+      "onB\017HelloWorldProtoP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -70,7 +70,7 @@ public final class HelloWorldProto {
     internal_static_helloworld_EncryptedMessageReqRes_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_helloworld_EncryptedMessageReqRes_descriptor,
-        new java.lang.String[] { "Payload", });
+        new java.lang.String[] { "Payload", "EncRandomKey", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

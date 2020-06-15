@@ -1,11 +1,10 @@
 package com.ullas.grpcEncryption.utils;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
-import java.util.Base64;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import org.slf4j.Logger;
@@ -45,9 +44,7 @@ public final class AesCryptUtil {
       key = sha.digest(key);
       key = Arrays.copyOf(key, 16);
       secretKey = new SecretKeySpec(key, "AES");
-    } catch (NoSuchAlgorithmException e) {
-      LOGGER.info(e.getMessage());
-    } catch (UnsupportedEncodingException e) {
+    } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
       LOGGER.info(e.getMessage());
     }
   }
@@ -55,16 +52,17 @@ public final class AesCryptUtil {
   /**
    * Decrypt string.
    *
-   * @param strToDecrypt the str to decrypt
-   * @param secret       the secret
+   * @param bytesToDecrypt the bytes to decrypt
+   * @param secret         the secret
    * @return the string
    */
-  public static String decrypt(String strToDecrypt, String secret) {
+  public static byte[] decrypt(byte[] bytesToDecrypt, String secret) {
     try {
-      setKey(secret);
-      Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
-      cipher.init(Cipher.DECRYPT_MODE, secretKey);
-      return new String(cipher.doFinal(Base64.getDecoder().decode(strToDecrypt)));
+      Key aesKey = new SecretKeySpec(secret.getBytes(), "AES");
+      Cipher cipher = Cipher.getInstance("AES");
+      // decrypt the text
+      cipher.init(Cipher.DECRYPT_MODE, aesKey);
+      return cipher.doFinal(bytesToDecrypt);
     } catch (Exception e) {
       LOGGER.info("#### EXCEPTION WHILE DECRYPTING : {}" + e.getMessage());
     }
@@ -72,13 +70,20 @@ public final class AesCryptUtil {
   }
 
 
-  public static String encrypt(String strToEncrypt, String secret) {
+  /**
+   * Encrypt byte [ ].
+   *
+   * @param bytesToEncrypt the bytes to encrypt
+   * @param secret         the secret
+   * @return the byte [ ]
+   */
+  public static byte[] encrypt(byte[] bytesToEncrypt, String secret) {
     try {
-      setKey(secret);
-      Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-      cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-      return Base64.getEncoder()
-          .encodeToString(cipher.doFinal(strToEncrypt.getBytes(StandardCharsets.UTF_8)));
+      Key aesKey = new SecretKeySpec(secret.getBytes(), "AES");
+      Cipher cipher = Cipher.getInstance("AES");
+      // encrypt the text
+      cipher.init(Cipher.ENCRYPT_MODE, aesKey);
+      return cipher.doFinal(bytesToEncrypt);
     } catch (Exception e) {
       LOGGER.info("Error while encrypting: " + e.toString());
     }

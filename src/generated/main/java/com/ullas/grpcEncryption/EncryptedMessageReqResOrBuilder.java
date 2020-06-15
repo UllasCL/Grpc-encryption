@@ -8,8 +8,20 @@ public interface EncryptedMessageReqResOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>bytes payload = 2;</code>
+   * <code>bytes payload = 1;</code>
    * @return The payload.
    */
   com.google.protobuf.ByteString getPayload();
+
+  /**
+   * <code>string encRandomKey = 2;</code>
+   * @return The encRandomKey.
+   */
+  java.lang.String getEncRandomKey();
+  /**
+   * <code>string encRandomKey = 2;</code>
+   * @return The bytes for encRandomKey.
+   */
+  com.google.protobuf.ByteString
+      getEncRandomKeyBytes();
 }
