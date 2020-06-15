@@ -34,32 +34,7 @@ public class TestServer {
    * The constant public_key.
    */
   private static String private_key
-      = "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDMfPQiepv4Ksbx\n"
-      + "z5ZQXsFrFoPfwpQDJ2BO5q5jvirEFuuAHiZS37NmBuhe/gX2lnRDPhkSa5H6fO3G\n"
-      + "Ssq4a1JTDwNpyi2e58JONeWac6HYCBZpDSShIAzPDn7rv9RfEITLOabBHI7/ojis\n"
-      + "wJeTXmL/qOR5RaZptLxWdTCvffVppW/Fo9d5Q0egNTK5QeF5g/CUa+S4dH1/woA8\n"
-      + "X/XrxNFmQNGhQaFdtKaTJrz9JArgJQbXuZBHDZxhwXnugfQXKDK6Kdnb16bCHN8d\n"
-      + "I5K91PH5fM67Y232rxtBo5HWqCakZLdK276kfu7MsqLlkOB/iKt+QI9KVFtQW+0y\n"
-      + "XRhqhrW/AgMBAAECggEBAJaDCncuZArgAZsOvobdl+QoqFxUrfk8TGkG5ilIWdYH\n"
-      + "QMQGbRLm0Pcx8muo8d60k1LDLFUglEwZFDK17kybwfacwFhnlfi2gZBrn1p17hRC\n"
-      + "r6wXHnTyUDs/YjBH/BsU34luH81YJfEHCEwvXeH8wUWInNKeb4SyoUXJ8FHbln1x\n"
-      + "E+DyEMGrUIkzdB2cfdr0Tw3bmYAFEbrWvrhPXak0eXqEvXrWubWeioCmLHwugpSa\n"
-      + "CpBxScd+mZjPfUo8i7rJD9YPnfwJrsgtXVMI1tQRXLHj68wTK2sbDQ2VXrHSsY1E\n"
-      + "U88SFs7BahtSpiXhcNPZyDfnSsiB6ZcvqodVkmWyRIECgYEA92v5vF76ACK9dRPK\n"
-      + "pT5toAGQrkFUV1VnP60b6sXt9fxPQWIq/YVnX3HueONg5uHr1VsJDZ1cbMZp1YKz\n"
-      + "ibx7scIvq9PHZcdDz2PYPYlhtw+pChs6Tm8GzLGoqvs9lfGYQwD9YPQ+FohSXRD0\n"
-      + "ZMucz2dOFL3n+ugK26nCQqWndiECgYEA05PqJFaa/uMpMJ9hdUYKPGU+itad+B9L\n"
-      + "Sn/X2BzLn7GpWHYW3ClDsVaP9runJbedkx9/v5KaxiCrjmtviWdf6NpYhGOfOHfZ\n"
-      + "QU97Z4/2ngVIT9bhqVoL4w9gzkIOqV2ca4ZIxbkKYSx1aHuHoiv+pW3TYDzFm7k4\n"
-      + "h8TJMB6e798CgYBJQYLzrvs+RwrpOy7otg8nLM91iIo8QWEMjWiSnn/SMR4WMcag\n"
-      + "wXrV25nL2Sa7tXBp/0Yy7cCLxENZoBUgVtoYy3Hp4g5LqC//m4RO0/pGhTB7eYxN\n"
-      + "5LmSqZdS6IhXeOyoCgb7SdWIPlyEiZySq2aGUgPgSEoDE+kDGMQXj4yBgQKBgQC+\n"
-      + "yX30oKgJuhvVfZMrZioqxf08w0UVjlqdZmTjuyue6FzVqT757rfc/Tq6egLCjy2n\n"
-      + "klrnDDNHAATTW2vrkm05E1OIpjDYgbJGI38bJwVy/z5yyEkbJljbum1H8Oc5sHEx\n"
-      + "wJh0u2Rxtd51hhcLlPJ+iGd4O7TRtJcWTsxA+QvHLwKBgE7+A/VnRWTeVNf+5dEh\n"
-      + "zWF1lj4wr+1oM80bCCwqOSBfD7BwDv7+1R+BCCicjmxfJkSlfx3xIKpwkRVB5X2M\n"
-      + "oE4Yj8XecUMBfkT88BFKW2P9TOxKjWNPF1/Lkf+KkTrzHGiDdTztj7k7TwNN6aDc\n"
-      + "ZeGY+/cpLH0BStV6YCl6ZkwJ";
+      = "";
   /**
    * The Port.
    */
