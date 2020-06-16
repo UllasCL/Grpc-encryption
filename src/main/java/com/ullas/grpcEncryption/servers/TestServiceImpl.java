@@ -17,7 +17,7 @@ import org.lognet.springboot.grpc.GRpcService;
 /**
  * The type Test service.
  */
-@GRpcService(interceptors = {GrpcDecryptionInterceptor.class, GrpcServerJwtInterceptor.class})
+@GRpcService()
 class TestServiceImpl extends TestServiceGrpc.TestServiceImplBase {
   /**
    * Gets config.
