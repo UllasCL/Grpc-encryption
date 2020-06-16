@@ -66,13 +66,13 @@ public class TestServer {
    * Generate random encryption key string.
    *
    * @param privateKeyForDecryption the private key for decryption
-   * @param encRendomKey            the enc rendom key
+   * @param encRandomKey            the enc random key
    * @return the string
    */
   private static String getRandomDecryptionKey(String privateKeyForDecryption,
-                                               String encRendomKey) {
+                                               String encRandomKey) {
     try {
-      return EncryptionUtil.getDecryptedStringPrivateKey(encRendomKey,
+      return EncryptionUtil.getDecryptedStringPrivateKey(encRandomKey,
           getPrivateKeyFromString(privateKeyForDecryption));
     } catch (GeneralSecurityException e) {
       e.printStackTrace();

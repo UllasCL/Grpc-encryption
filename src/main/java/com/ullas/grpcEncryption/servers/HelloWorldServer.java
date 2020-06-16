@@ -36,7 +36,7 @@ public class HelloWorldServer {
   /**
    * The constant public_key.
    */
-  private static String public_key = "";
+  private static String public_key = "abkjsackjsd";
   /**
    * The Port.
    */
