@@ -14,14 +14,8 @@ public interface EncryptedMessageOrBuilder extends
   com.google.protobuf.ByteString getData();
 
   /**
-   * <code>string key = 2;</code>
+   * <code>bytes key = 2;</code>
    * @return The key.
    */
-  java.lang.String getKey();
-  /**
-   * <code>string key = 2;</code>
-   * @return The bytes for key.
-   */
-  com.google.protobuf.ByteString
-      getKeyBytes();
+  com.google.protobuf.ByteString getKey();
 }

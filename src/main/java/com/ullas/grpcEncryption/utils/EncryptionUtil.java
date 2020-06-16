@@ -153,7 +153,7 @@ public final class EncryptionUtil {
    * @param publicKey the public key
    * @return the encrypted string public key
    */
-  public static String getEncryptedStringPublicKey(String request, PublicKey publicKey) {
+  public static byte[] getEncryptedStringPublicKey(String request, PublicKey publicKey) {
 
     Cipher cipher = null; //or try with "RSA"
     try {
@@ -176,6 +176,6 @@ public final class EncryptionUtil {
     } catch (BadPaddingException | IllegalBlockSizeException e) {
       e.printStackTrace();
     }
-    return Base64.getEncoder().encodeToString(encrypted);
+    return encrypted;
   }
 }
