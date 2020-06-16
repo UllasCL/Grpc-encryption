@@ -31,7 +31,7 @@ public class TestServer {
    * The constant logger.
    */
   private static final Logger logger = Logger.getLogger(
-      HelloWorldServer.class.getName());
+      TestServer.class.getName());
 
   /**
    * The constant public_key.
