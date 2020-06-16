@@ -31,13 +31,13 @@ public class TestClient {
    * The constant private_key.
    */
   public static String public_key
-      =  "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3GkdjRkPT6A1M3xSlu+F"
-      + "1P7M0XmUV4R4fczGjoYUYM84vlYN2iZwIOBaKIQUwrb620bRxGxcObslSww5FGNy"
-      + "e/KjEE7qGAod1d95edmFv7C48hG7v2oZAIGSivg5yLeemZ/OIBYwpOjzgGWCH3tY"
-      + "qJl5CiYdwv8DJTSfVdWe/7IELEu0u4kehpcRdQ55U2OR574+20C5RN0esS9Vb7oX"
-      + "YXglFsfFl8Vdr2ZJNyjHQvIDTTZMOY/u53B6NgnOEey3xWLsMfdV0aXpU7A89D5B"
-      + "MbLuBT5B5RM8Wy1zhEeGtz5lNg2uAem37ddij+E+inhqyV92ZaQaa4tTqcY4tgda"
-      + "CwIDAQAB";
+      = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyjbyq9kOHUAKBtiuopLv"
+      + "ZjyERY6v/lrUFx1b82NmFR2k/aa/0vF3yvhIKO3Z9uDwmYkmQE+doM9KatV1oAqq"
+      + "9dQEFmJ+8otgacS7C4RBV71dI9AuEJ8XNMYW8DYIzoG7s9Isfa+2Hci3bcor8sMJ"
+      + "0pSHYN+iI36WhEmJiEf8vF0F+JUK3RBxy+XtfZHZvk1wID3/oe+L8ySMVoEBAKs4"
+      + "jMsV1PWPRJcmZwIsQw53lkL8ZvXYRbwjojciJ33q+KxB3KKMcOxrxiHaR70SrRdZ"
+      + "CQsWHJkCESZRmTV7tgWNHo0JYxQZ92b6/Wf7oByIP82mV36e5fEfPf37NTS37byX"
+      + "0QIDAQAB";
   /**
    * The constant responseEncryptionKey.
    */
