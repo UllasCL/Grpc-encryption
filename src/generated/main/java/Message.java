@@ -2287,16 +2287,10 @@ public final class Message {
     com.google.protobuf.ByteString getData();
 
     /**
-     * <code>string key = 2;</code>
+     * <code>bytes key = 2;</code>
      * @return The key.
      */
-    java.lang.String getKey();
-    /**
-     * <code>string key = 2;</code>
-     * @return The bytes for key.
-     */
-    com.google.protobuf.ByteString
-        getKeyBytes();
+    com.google.protobuf.ByteString getKey();
   }
   /**
    * Protobuf type {@code EncryptedMessage}
@@ -2312,7 +2306,7 @@ public final class Message {
     }
     private EncryptedMessage() {
       data_ = com.google.protobuf.ByteString.EMPTY;
-      key_ = "";
+      key_ = com.google.protobuf.ByteString.EMPTY;
     }
 
     @java.lang.Override
@@ -2351,9 +2345,8 @@ public final class Message {
               break;
             }
             case 18: {
-              java.lang.String s = input.readStringRequireUtf8();
 
-              key_ = s;
+              key_ = input.readBytes();
               break;
             }
             default: {
@@ -2399,39 +2392,13 @@ public final class Message {
     }
 
     public static final int KEY_FIELD_NUMBER = 2;
-    private volatile java.lang.Object key_;
+    private com.google.protobuf.ByteString key_;
     /**
-     * <code>string key = 2;</code>
+     * <code>bytes key = 2;</code>
      * @return The key.
      */
-    public java.lang.String getKey() {
-      java.lang.Object ref = key_;
-      if (ref instanceof java.lang.String) {
-        return (java.lang.String) ref;
-      } else {
-        com.google.protobuf.ByteString bs = 
-            (com.google.protobuf.ByteString) ref;
-        java.lang.String s = bs.toStringUtf8();
-        key_ = s;
-        return s;
-      }
-    }
-    /**
-     * <code>string key = 2;</code>
-     * @return The bytes for key.
-     */
-    public com.google.protobuf.ByteString
-        getKeyBytes() {
-      java.lang.Object ref = key_;
-      if (ref instanceof java.lang.String) {
-        com.google.protobuf.ByteString b = 
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (java.lang.String) ref);
-        key_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
+    public com.google.protobuf.ByteString getKey() {
+      return key_;
     }
 
     private byte memoizedIsInitialized = -1;
@@ -2451,8 +2418,8 @@ public final class Message {
       if (!data_.isEmpty()) {
         output.writeBytes(1, data_);
       }
-      if (!getKeyBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 2, key_);
+      if (!key_.isEmpty()) {
+        output.writeBytes(2, key_);
       }
       unknownFields.writeTo(output);
     }
@@ -2467,8 +2434,9 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeBytesSize(1, data_);
       }
-      if (!getKeyBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, key_);
+      if (!key_.isEmpty()) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(2, key_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -2639,7 +2607,7 @@ public final class Message {
         super.clear();
         data_ = com.google.protobuf.ByteString.EMPTY;
 
-        key_ = "";
+        key_ = com.google.protobuf.ByteString.EMPTY;
 
         return this;
       }
@@ -2720,9 +2688,8 @@ public final class Message {
         if (other.getData() != com.google.protobuf.ByteString.EMPTY) {
           setData(other.getData());
         }
-        if (!other.getKey().isEmpty()) {
-          key_ = other.key_;
-          onChanged();
+        if (other.getKey() != com.google.protobuf.ByteString.EMPTY) {
+          setKey(other.getKey());
         }
         this.mergeUnknownFields(other.unknownFields);
         onChanged();
@@ -2786,47 +2753,20 @@ public final class Message {
         return this;
       }
 
-      private java.lang.Object key_ = "";
+      private com.google.protobuf.ByteString key_ = com.google.protobuf.ByteString.EMPTY;
       /**
-       * <code>string key = 2;</code>
+       * <code>bytes key = 2;</code>
        * @return The key.
        */
-      public java.lang.String getKey() {
-        java.lang.Object ref = key_;
-        if (!(ref instanceof java.lang.String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          java.lang.String s = bs.toStringUtf8();
-          key_ = s;
-          return s;
-        } else {
-          return (java.lang.String) ref;
-        }
+      public com.google.protobuf.ByteString getKey() {
+        return key_;
       }
       /**
-       * <code>string key = 2;</code>
-       * @return The bytes for key.
-       */
-      public com.google.protobuf.ByteString
-          getKeyBytes() {
-        java.lang.Object ref = key_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b = 
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (java.lang.String) ref);
-          key_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <code>string key = 2;</code>
+       * <code>bytes key = 2;</code>
        * @param value The key to set.
        * @return This builder for chaining.
        */
-      public Builder setKey(
-          java.lang.String value) {
+      public Builder setKey(com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
@@ -2836,28 +2776,12 @@ public final class Message {
         return this;
       }
       /**
-       * <code>string key = 2;</code>
+       * <code>bytes key = 2;</code>
        * @return This builder for chaining.
        */
       public Builder clearKey() {
         
         key_ = getDefaultInstance().getKey();
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>string key = 2;</code>
-       * @param value The bytes for key to set.
-       * @return This builder for chaining.
-       */
-      public Builder setKeyBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-        
-        key_ = value;
         onChanged();
         return this;
       }
@@ -2952,7 +2876,7 @@ public final class Message {
       "\t\"\030\n\010Request2\022\014\n\004data\030\001 \001(\t\"\031\n\tResponse1" +
       "\022\014\n\004data\030\001 \001(\t\"\031\n\tResponse2\022\014\n\004data\030\001 \001(" +
       "\t\"-\n\020EncryptedMessage\022\014\n\004data\030\001 \001(\014\022\013\n\003k" +
-      "ey\030\002 \001(\t2q\n\013TestService\0221\n\tGetConfig\022\021.E" +
+      "ey\030\002 \001(\0142q\n\013TestService\0221\n\tGetConfig\022\021.E" +
       "ncryptedMessage\032\021.EncryptedMessage\022/\n\007Ge" +
       "tUser\022\021.EncryptedMessage\032\021.EncryptedMess" +
       "ageb\006proto3"

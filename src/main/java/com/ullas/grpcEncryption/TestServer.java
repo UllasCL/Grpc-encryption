@@ -11,9 +11,7 @@ import io.grpc.stub.StreamObserver;
 import java.security.GeneralSecurityException;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.Arrays;
 import java.util.Base64;
 import java.util.Objects;
@@ -75,20 +73,6 @@ public class TestServer {
       e.printStackTrace();
     }
     return null;
-  }
-
-  /**
-   * Gets public key from string.
-   *
-   * @param stored the stored
-   * @return the public key from string
-   * @throws GeneralSecurityException the general security exception
-   */
-  private static PublicKey getPublicKeyFromString(String stored) throws GeneralSecurityException {
-    byte[] data = Base64.getDecoder().decode((stored.getBytes()));
-    X509EncodedKeySpec spec = new X509EncodedKeySpec(data);
-    KeyFactory fact = KeyFactory.getInstance("RSA");
-    return fact.generatePublic(spec);
   }
 
   /**

@@ -44,9 +44,7 @@ public final class EncryptionUtil {
     Cipher cipher = null; //or try with "RSA"
     try {
       cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
-    } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-    } catch (NoSuchPaddingException e) {
+    } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
       e.printStackTrace();
     }
 
@@ -117,6 +115,13 @@ public final class EncryptionUtil {
     return kf.generatePrivate(privateKeySpec);
   }
 
+  /**
+   * Gets decrypted string private key.
+   *
+   * @param text       the text
+   * @param privateKey the private key
+   * @return the decrypted string private key
+   */
   public static String getDecryptedStringPrivateKey(String text, PrivateKey privateKey) {
     Cipher cipher = null; //or try with "RSA"
     try {
@@ -139,5 +144,38 @@ public final class EncryptionUtil {
       e.printStackTrace();
     }
     return finalString;
+  }
+
+  /**
+   * Gets encrypted string public key.
+   *
+   * @param request   the request
+   * @param publicKey the public key
+   * @return the encrypted string public key
+   */
+  public static String getEncryptedStringPublicKey(String request, PublicKey publicKey) {
+
+    Cipher cipher = null; //or try with "RSA"
+    try {
+      cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
+    } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
+      e.printStackTrace();
+    }
+
+    try {
+      if (cipher != null) {
+        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+      }
+    } catch (InvalidKeyException e) {
+      e.printStackTrace();
+    }
+
+    byte[] encrypted = null;
+    try {
+      encrypted = cipher.doFinal(request.getBytes(UTF_8));
+    } catch (BadPaddingException | IllegalBlockSizeException e) {
+      e.printStackTrace();
+    }
+    return Base64.getEncoder().encodeToString(encrypted);
   }
 }
