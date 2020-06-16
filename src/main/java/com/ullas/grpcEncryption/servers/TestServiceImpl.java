@@ -5,6 +5,7 @@ import com.ullas.grpcEncryption.EncryptedMessage;
 import com.ullas.grpcEncryption.Request1;
 import com.ullas.grpcEncryption.Response1;
 import com.ullas.grpcEncryption.TestServiceGrpc;
+import com.ullas.grpcEncryption.interceptors.GrpcDecryptionInterceptor;
 import com.ullas.grpcEncryption.interceptors.GrpcServerJwtInterceptor;
 import com.ullas.grpcEncryption.utils.AesCryptUtil;
 import com.ullas.grpcEncryption.utils.AesEncryptionUtil;
@@ -23,7 +24,7 @@ import org.lognet.springboot.grpc.GRpcService;
 /**
  * The type Test service.
  */
-@GRpcService(interceptors = GrpcServerJwtInterceptor.class)
+@GRpcService(interceptors = {GrpcDecryptionInterceptor.class, GrpcServerJwtInterceptor.class})
 class TestServiceImpl extends TestServiceGrpc.TestServiceImplBase {
   /**
    * The constant private_key.

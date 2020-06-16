@@ -5,10 +5,12 @@ import io.grpc.Contexts;
 import io.grpc.Metadata;
 import io.grpc.ServerCall;
 import io.grpc.ServerCallHandler;
+import io.grpc.ServerInterceptor;
 import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +19,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Order(-2147483647)
-public class GrpcDecryptionInterceptor {
+public class GrpcDecryptionInterceptor implements ServerInterceptor {
   /**
    * The constant LOGGER.
    */
@@ -49,7 +51,7 @@ public class GrpcDecryptionInterceptor {
                                                                final ServerCallHandler<ReqT,
                                                                    RespT> next) {
     try {
-      LOGGER.info("Inside interceptCall");
+      LOGGER.info("Inside interceptCall",call);
 
       return Contexts.interceptCall(Context.current(), call, headers, next);
     } catch (StatusRuntimeException var6) {
