@@ -117,7 +117,14 @@ public final class EncryptionUtil {
     return kf.generatePrivate(privateKeySpec);
   }
 
-  public static String getDecryptedStringPrivateKey(String text, PrivateKey privateKey) {
+  /**
+   * Gets decrypted string private key.
+   *
+   * @param text       the text
+   * @param privateKey the private key
+   * @return the decrypted string private key
+   */
+  public static String getDecryptedStringPrivateKey(byte[] text, PrivateKey privateKey) {
     Cipher cipher = null; //or try with "RSA"
     try {
       cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");
@@ -131,7 +138,7 @@ public final class EncryptionUtil {
     } catch (InvalidKeyException e) {
       e.printStackTrace();
     }
-    byte[] encrypted = Base64.getDecoder().decode(text);
+    byte[] encrypted = text;
     String finalString = null;
     try {
       finalString = new String(cipher.doFinal(encrypted), UTF_8);

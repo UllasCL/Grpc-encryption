@@ -65,7 +65,7 @@ class TestServiceImpl extends TestServiceGrpc.TestServiceImplBase {
    * @return the string
    */
   private static String getRandomDecryptionKey(String privateKeyForDecryption,
-                                               String encRandomKey) {
+                                               byte[] encRandomKey) {
     try {
       return EncryptionUtil.getDecryptedStringPrivateKey(encRandomKey,
           getPrivateKeyFromString(privateKeyForDecryption));
@@ -114,7 +114,7 @@ class TestServiceImpl extends TestServiceGrpc.TestServiceImplBase {
   public void getConfig(final EncryptedMessage request,
                         final StreamObserver<EncryptedMessage> responseObserver) {
 
-    String secretkey = getRandomDecryptionKey(private_key, request.getKey());
+    String secretkey = getRandomDecryptionKey(private_key, request.getKey().toByteArray());
     Response1 response;
     Request1 reqFromClient = null;
     try {

@@ -52,7 +52,7 @@ public final class MessageProto {
       "data\030\001 \001(\t\"\030\n\010Request2\022\014\n\004data\030\001 \001(\t\"\031\n\t" +
       "Response1\022\014\n\004data\030\001 \001(\t\"\031\n\tResponse2\022\014\n\004" +
       "data\030\001 \001(\t\"-\n\020EncryptedMessage\022\014\n\004data\030\001" +
-      " \001(\014\022\013\n\003key\030\002 \001(\t2\221\001\n\013TestService\022A\n\tGet" +
+      " \001(\014\022\013\n\003key\030\002 \001(\0142\221\001\n\013TestService\022A\n\tGet" +
       "Config\022\031.message.EncryptedMessage\032\031.mess" +
       "age.EncryptedMessage\022?\n\007GetUser\022\031.messag" +
       "e.EncryptedMessage\032\031.message.EncryptedMe" +
