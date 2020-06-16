@@ -1,26 +1,25 @@
 package com.ullas.grpcEncryption;
 
-import com.google.protobuf.ByteString;
-import com.ullas.grpcEncryption.TestServiceGrpc.TestServiceImplBase;
-import com.ullas.grpcEncryption.utils.AesCryptUtil;
-import com.ullas.grpcEncryption.utils.AesEncryptionUtil;
-import com.ullas.grpcEncryption.utils.EncryptionUtil;
-import io.grpc.Server;
-import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import java.security.GeneralSecurityException;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.util.Arrays;
+import com.google.protobuf.ByteString;
+import com.ullas.grpcEncryption.TestServiceGrpc.TestServiceImplBase;
+import com.ullas.grpcEncryption.utils.AesCryptUtil;
+import com.ullas.grpcEncryption.utils.AesEncryptionUtil;
+import com.ullas.grpcEncryption.utils.EncryptionUtil;
 import java.util.Base64;
 import java.util.Objects;
 import java.util.logging.Logger;
+import org.lognet.springboot.grpc.GRpcService;
 
 /**
- * The type Hello world server.
+ * The type Greeter.
  */
-public class TestServer {
+@GRpcService
+public class TestServer extends TestServiceImplBase {
 
   /**
    * The constant logger.
@@ -32,28 +31,54 @@ public class TestServer {
    */
   private static String private_key
       = "";
-  /**
-   * The Port.
-   */
-  private int port = 42423;
-  /**
-   * The Server.
-   */
-  private Server server;
 
   /**
-   * The entry point of application.
+   * Gets config.
    *
-   * @param args the input arguments
-   * @throws Exception the exception
+   * @param request          the request
+   * @param responseObserver the response observer
    */
-  public static void main(String[] args) throws Exception {
-    logger.info("Server startup. Args = " + Arrays.toString(args));
-    final TestServer
-        testServer = new TestServer();
+  @Override
+  public void getConfig(final EncryptedMessage request,
+      final StreamObserver<EncryptedMessage> responseObserver) {
 
-    testServer.start();
-    testServer.blockUntilShutdown();
+    String secretkey = getRandomDecryptionKey(private_key, request.getKey());
+    Response1 response;
+    Request1 reqFromClient = null;
+    try {
+      reqFromClient =
+          Request1.parseFrom(AesCryptUtil.decrypt(request.getData().toByteArray(),
+              secretkey));
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    EncryptedMessage encRes =
+        EncryptedMessage.newBuilder().build();
+    try {
+      response = Response1.newBuilder().setData(
+          "hello " + Objects.requireNonNull(reqFromClient).getData()
+      ).build();
+      encRes = EncryptedMessage.newBuilder().setData(
+          ByteString.copyFrom(AesEncryptionUtil.encrypt(response.toByteArray())))
+          .build();
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    responseObserver.onNext(encRes);
+    responseObserver.onCompleted();
+  }
+
+  /**
+   * Gets user.
+   *
+   * @param request          the request
+   * @param responseObserver the response observer
+   */
+  @Override
+  public void getUser(final EncryptedMessage request,
+      final StreamObserver<EncryptedMessage> responseObserver) {
+    super.getUser(request, responseObserver);
   }
 
   /**
@@ -64,7 +89,7 @@ public class TestServer {
    * @return the string
    */
   private static String getRandomDecryptionKey(String privateKeyForDecryption,
-                                               String encRendomKey) {
+      String encRendomKey) {
     try {
       return EncryptionUtil.getDecryptedStringPrivateKey(encRendomKey,
           getPrivateKeyFromString(privateKeyForDecryption));
@@ -87,102 +112,5 @@ public class TestServer {
         new PKCS8EncodedKeySpec(data);
     KeyFactory fact = KeyFactory.getInstance("RSA");
     return fact.generatePrivate(spec);
-  }
-
-  /**
-   * Start.
-   *
-   * @throws Exception the exception
-   */
-  private void start() throws Exception {
-    logger.info("Starting the grpc server");
-
-    server = ServerBuilder.forPort(port)
-        .addService(new TestServiceImpl())
-        .build()
-        .start();
-
-    logger.info("Server started. Listening on port " + port);
-
-    Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-      System.err.println("*** JVM is shutting down. Turning off grpc server as well ***");
-      TestServer.this.stop();
-      System.err.println("*** shutdown complete ***");
-    }));
-  }
-
-  /**
-   * Stop.
-   */
-  private void stop() {
-    if (server != null) {
-      server.shutdown();
-    }
-  }
-
-  /**
-   * Block until shutdown.
-   *
-   * @throws InterruptedException the interrupted exception
-   */
-  private void blockUntilShutdown() throws InterruptedException {
-    if (server != null) {
-      server.awaitTermination();
-    }
-  }
-
-  /**
-   * The type Greeter.
-   */
-  private class TestServiceImpl extends TestServiceImplBase {
-
-    /**
-     * Gets config.
-     *
-     * @param request          the request
-     * @param responseObserver the response observer
-     */
-    @Override
-    public void getConfig(final EncryptedMessage request,
-                          final StreamObserver<EncryptedMessage> responseObserver) {
-
-      String secretkey = getRandomDecryptionKey(private_key, request.getKey());
-      Response1 response;
-      Request1 reqFromClient = null;
-      try {
-        reqFromClient =
-            Request1.parseFrom(AesCryptUtil.decrypt(request.getData().toByteArray(),
-                secretkey));
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-      EncryptedMessage encRes =
-          EncryptedMessage.newBuilder().build();
-      try {
-        response = Response1.newBuilder().setData(
-            "hello " + Objects.requireNonNull(reqFromClient).getData()
-        ).build();
-        encRes = EncryptedMessage.newBuilder().setData(
-            ByteString.copyFrom(AesEncryptionUtil.encrypt(response.toByteArray())))
-            .build();
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-
-      responseObserver.onNext(encRes);
-      responseObserver.onCompleted();
-    }
-
-    /**
-     * Gets user.
-     *
-     * @param request          the request
-     * @param responseObserver the response observer
-     */
-    @Override
-    public void getUser(final EncryptedMessage request,
-                        final StreamObserver<EncryptedMessage> responseObserver) {
-      super.getUser(request, responseObserver);
-    }
   }
 }

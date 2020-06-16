@@ -22,6 +22,7 @@ import java.util.logging.Logger;
  * The type Hello world client.
  */
 public class TestClient {
+
   /**
    * The constant logger.
    */
@@ -64,7 +65,7 @@ public class TestClient {
    * @throws Exception the exception
    */
   public static void main(String[] args) throws Exception {
-    TestClient client = new TestClient("localhost", 42423);
+    TestClient client = new TestClient("localhost", 6565);
     String name = args.length > 0 ? args[0] : "unknown";
 
     try {

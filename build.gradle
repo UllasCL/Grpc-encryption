@@ -22,7 +22,10 @@ repositories {
 }
 
 dependencies {
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter'
+	compile 'io.github.lognet:grpc-spring-boot-starter:3.0.0'
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java
 	implementation group: 'com.google.protobuf', name: 'protobuf-java', version: '3.11.1'
