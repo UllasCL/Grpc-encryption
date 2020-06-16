@@ -29,7 +29,19 @@ class TestServiceImpl extends TestServiceGrpc.TestServiceImplBase {
    * The constant private_key.
    */
   private static String private_key
-      = "";
+      = "MIICXQIBAAKBgQCsURnxnPIi6oWS7jEJHVujP18uo/zVSbDz7yBpHWDzRvnmaDnb"
+      + "TunFbrfJwnGI/9YRXLVEKPihv0pj/oeO06ARQaqMChY9BZTHETb0DGkOCzS5+7QW"
+      + "QZkhsk3LvJcY7EbBGZIoGHzk54ZEnTrHbVtB0rPbu9cLIGxwTyumPlf0rQIDAQAB"
+      + "AoGAOqmVgnqiuB5NAPtT+D1lYAsH9VHglh/zPOgwiXh18/w6wSTEZZPU4+DQcsBe"
+      + "dHxcPSbpkt273xzHT4lsTsRe3lGnOmDDvjutFm45lECHHhebOFb56LNMJ1cXBuNb"
+      + "/LFma9zXGUiz8MheIF1vLI8Vv7zQnWZwoA6m2ZhTquefr0ECQQDituijRRKurWGR"
+      + "9zW+7eoq9FpYKMWT2knAd+pAbLrTxa+6dxr8O1rcnA2TqAln4EsK+1ICWw7nvr+Q"
+      + "vlPa/nrRAkEAwpNYxhXrKG4LZfuXxW16kQHf3D8kVCU7S/AWiX/5xc7/UdScI1gv"
+      + "A7utydzL7NSOZ5v3APrB7fLGA9HbE5AbHQJBANtlABpIFL0/geVcYwGCgRLSZr9b"
+      + "rV/YZXjBUsrHrcCUVOtQqaef1N0akzTp7zg74MMe1Iz9C56OhBmRZdrOW5ECQQCg"
+      + "H7xFv5H3gqA0vBjJa3AbV2yPhxLxgHZM5vbVDxFQ/SlWgV5BI/gE3XWGkwLrEn1i"
+      + "vJJIJxRjKpBUYmYkskntAkBOgWldiubTraFBTA2p1jsQ900crTHakAkN8Rfx4LO8"
+      + "4tF1wYPBggHv85w2sjmW77kkQt9nRuRVlbYAKKCvkRGX";
 
   /**
    * Generate random encryption key string.
