@@ -25,12 +25,12 @@ public class TestClient {
   /**
    * The constant logger.
    */
-  private static final Logger logger = Logger.getLogger(HelloWorldClient.class.getName());
+  private static final Logger logger = Logger.getLogger(TestClient.class.getName());
   /**
    * The constant private_key.
    */
   public static String public_key
-      = "";
+      = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApHqn6dyRf6GSk/XBwT1lSFAgKq12L2wmZgxgkLIFidJjva1YgxI5/uGKouRpBHH5C7GxRuuoYLZaPR3tcYgjxdBrFfe2AFvJS/qkhIRvQ5TUxKiti5UcoT6rBfAw0Pncvu65NzuQNWcyYNBpTLasdUnvaf1t2arpTUg0JCdQAfuRacZn3//PHjvL+IG0CCO51RL9vBXUOEtS7APvIhok708hkOre5lIC5WcvwtVvCyc/fQq7VPK6GaU7woLSxHb+QGmGRQzWd7PNsnA3gCAUQ7waXznvZSngnTi4VEdUebkWoyVjfwhf+1yIebFpL1/jamBy9fkD99HuFlTTBc22vwIDAQAB";
   /**
    * The constant responseEncryptionKey.
    */
