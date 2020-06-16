@@ -39,8 +39,8 @@ dependencies {
 
     implementation 'io.github.lognet:grpc-spring-boot-starter:3.0.0'
 
-// https://mvnrepository.com/artifact/org.apache.tomcat.embed/tomcat-embed-core
-    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-core', version: '8.5.34'
+    implementation('org.springframework.boot:spring-boot-starter-web')
+
 
 }
 

@@ -9,7 +9,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
  * The type Grpc encryption application.
  */
 @SpringBootApplication
-public class GrpcEncryptionApplication {
+public class GrpcEncryptionApplication extends SpringBootServletInitializer {
 
   /**
    * The entry point of application.
@@ -18,5 +18,10 @@ public class GrpcEncryptionApplication {
    */
   public static void main(String[] args) {
     SpringApplication.run(GrpcEncryptionApplication.class, args);
+  }
+
+  @Override
+  protected SpringApplicationBuilder configure(final SpringApplicationBuilder builder) {
+    return builder.sources(GrpcEncryptionApplication.class);
   }
 }
