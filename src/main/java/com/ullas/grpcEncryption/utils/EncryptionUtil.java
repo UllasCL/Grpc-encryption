@@ -11,11 +11,13 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import org.springframework.stereotype.Service;
 
 
 /**
  * The type Encryption util.
  */
+@Service
 public final class EncryptionUtil {
 
   /**
@@ -25,7 +27,7 @@ public final class EncryptionUtil {
    * @param privateKey the private key
    * @return the encrypted string
    */
-  public static byte[] getEncryptedString(byte[] respose, PrivateKey privateKey) {
+  public byte[] getEncryptedString(byte[] respose, PrivateKey privateKey) {
 
     Cipher cipher = null; //or try with "RSA"
     try {
@@ -58,7 +60,7 @@ public final class EncryptionUtil {
    * @param privateKey the private key
    * @return the decrypted string private key
    */
-  public static String getDecryptedStringPrivateKey(byte[] text, PrivateKey privateKey) {
+  public String getDecryptedStringPrivateKey(byte[] text, PrivateKey privateKey) {
     Cipher cipher = null; //or try with "RSA"
     try {
       cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding");

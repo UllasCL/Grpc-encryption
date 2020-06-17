@@ -2,6 +2,7 @@ package com.ullas.grpcEncryption.interceptors;
 
 import com.ullas.grpcEncryption.utils.ModifyRequestUtil;
 import com.ullas.grpcEncryption.utils.ModifyResponseUtil;
+import com.ullas.grpcEncryption.utils.RandomUtil;
 import io.grpc.ForwardingServerCallListener;
 import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
@@ -13,6 +14,7 @@ import io.grpc.Status;
 import io.grpc.StatusRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -31,6 +33,23 @@ public class GrpcDecryptionInterceptor implements ServerInterceptor {
    */
   private static final Listener NOOP_LISTENER = new Listener() {
   };
+
+  /**
+   * The Modify response util.
+   */
+  @Autowired
+  private ModifyResponseUtil modifyResponseUtil;
+  /**
+   * The Modify request util.
+   */
+  @Autowired
+  private ModifyRequestUtil modifyRequestUtil;
+
+  /**
+   * The Random util.
+   */
+  @Autowired
+  private RandomUtil randomUtil;
 
   /**
    * Instantiates a new Grpc decryption interceptor.
@@ -58,7 +77,7 @@ public class GrpcDecryptionInterceptor implements ServerInterceptor {
       return new ForwardingServerCallListener.SimpleForwardingServerCallListener<ReqT>(listener) {
         @Override
         public void onMessage(ReqT message) {
-          ReqT modifiedMessage = ModifyRequestUtil.modifyRequest(message);
+          ReqT modifiedMessage = modifyRequestUtil.modifyRequest(message);
           super.onMessage(modifiedMessage);
         }
       };
@@ -124,7 +143,7 @@ public class GrpcDecryptionInterceptor implements ServerInterceptor {
     public void sendMessage(R message) {
       LOGGER.info("Method: {}, Response: {}", serverCall.getMethodDescriptor().getFullMethodName(),
           message);
-      R modifiedResponse = ModifyResponseUtil.modifyResponse(message);
+      R modifiedResponse = modifyResponseUtil.modifyResponse(message);
       serverCall.sendMessage(modifiedResponse);
     }
 

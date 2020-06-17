@@ -5,14 +5,18 @@ import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 /**
  * The type Random utils.
  */
+@Service
 public class RandomUtil {
 
   /**
-   * The constant private_key.
+   * The Encryption util.
    */
   private static String private_key
       = "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDcaR2NGQ9PoDUz"
@@ -43,16 +47,26 @@ public class RandomUtil {
       + "YnUV8vEb+baekebanXMPnK38";
 
   /**
+   * The Encryption util.
+   */
+  @Autowired
+  private EncryptionUtil encryptionUtil;
+  /**
+   * The Private key.
+   */
+  @Value("${aes.private_key}")
+  public String privateKey;
+  /**
    * Gets random decryption key.
    *
    * @param encRandomKey the enc random key
    * @return the random decryption key
    */
-  public static String getRandomDecryptionKey(
+  public String getRandomDecryptionKey(
       byte[] encRandomKey) {
     try {
-      return EncryptionUtil.getDecryptedStringPrivateKey(encRandomKey,
-          getPrivateKeyFromString(private_key));
+      return encryptionUtil.getDecryptedStringPrivateKey(encRandomKey,
+          getPrivateKeyFromString(privateKey));
     } catch (GeneralSecurityException e) {
       e.printStackTrace();
     }
@@ -66,7 +80,7 @@ public class RandomUtil {
    * @return the private key from string
    * @throws GeneralSecurityException the general security exception
    */
-  public static PrivateKey getPrivateKeyFromString(String stored) throws GeneralSecurityException {
+  public PrivateKey getPrivateKeyFromString(String stored) throws GeneralSecurityException {
     byte[] data = Base64.getDecoder().decode((stored.getBytes()));
     PKCS8EncodedKeySpec spec =
         new PKCS8EncodedKeySpec(data);

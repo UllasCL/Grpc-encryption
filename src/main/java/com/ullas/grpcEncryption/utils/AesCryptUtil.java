@@ -1,18 +1,16 @@
 package com.ullas.grpcEncryption.utils;
 
-import java.io.UnsupportedEncodingException;
 import java.security.Key;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 /**
  * The type Aes crypt util.
  */
+@Service
 public final class AesCryptUtil {
 
   /**
@@ -27,7 +25,7 @@ public final class AesCryptUtil {
    * @param secret         the secret
    * @return the string
    */
-  public static byte[] decrypt(byte[] bytesToDecrypt, String secret) {
+  public byte[] decrypt(byte[] bytesToDecrypt, String secret) {
     try {
       Key aesKey = new SecretKeySpec(secret.getBytes(), "AES");
       Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
@@ -48,7 +46,7 @@ public final class AesCryptUtil {
    * @param secret         the secret
    * @return the byte [ ]
    */
-  public static byte[] encrypt(byte[] bytesToEncrypt, String secret) {
+  public byte[] encrypt(byte[] bytesToEncrypt, String secret) {
     try {
       Key aesKey = new SecretKeySpec(secret.getBytes(), "AES");
       Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
