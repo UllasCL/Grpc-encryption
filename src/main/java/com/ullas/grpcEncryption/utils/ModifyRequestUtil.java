@@ -80,47 +80,4 @@ public class ModifyRequestUtil {
         .setKey(ByteString.copyFromUtf8(secretKey))
         .build();
   }
-
-
-  /**
-   * Modify response res t.
-   *
-   * @param <ResT>  the type parameter
-   * @param message the message
-   * @return the res t
-   */
-  public static <ResT> ResT modifyResponse(final ResT message) {
-    String encryptionKey = generateRandomEncryptionKey();
-    byte[] encBytes = null;
-    try {
-      encBytes =
-          AesCryptUtil.encrypt(((EncryptedMessage) message).getData().toByteArray(),
-              encryptionKey);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-    assert encBytes != null;
-    return (ResT) EncryptedMessage.newBuilder().setData(ByteString.copyFrom(encBytes))
-        .setKey(ByteString.copyFrom(responseEncryptionKey))
-        .build();
-  }
-
-
-  /**
-   * Generate random encryption key string.
-   *
-   * @return the string
-   */
-  private static String generateRandomEncryptionKey() {
-    String key = UUID.randomUUID().toString().replace("-", "");
-    try {
-      responseEncryptionKey =
-          EncryptionUtil.getEncryptedString(key.getBytes(),
-              RandomUtil.getPrivateKeyFromString(private_key));
-    } catch (GeneralSecurityException e) {
-      e.printStackTrace();
-    }
-    return key;
-  }
 }

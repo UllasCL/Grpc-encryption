@@ -21,11 +21,6 @@ public final class AesCryptUtil {
   public static final Logger LOGGER = LoggerFactory.getLogger(AesCryptUtil.class);
 
   /**
-   * The constant secretKey.
-   */
-  private static SecretKeySpec secretKey;
-
-  /**
    * Decrypt string.
    *
    * @param bytesToDecrypt the bytes to decrypt

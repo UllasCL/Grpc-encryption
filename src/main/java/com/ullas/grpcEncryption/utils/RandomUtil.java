@@ -5,7 +5,6 @@ import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.util.Base64;
-import java.util.UUID;
 
 /**
  * The type Random utils.
@@ -73,21 +72,5 @@ public class RandomUtil {
         new PKCS8EncodedKeySpec(data);
     KeyFactory fact = KeyFactory.getInstance("RSA");
     return fact.generatePrivate(spec);
-  }
-
-  /**
-   * Gets random decryption key.
-   *
-   * @param encRandomKey the enc random key
-   * @return the random decryption key
-   */
-  public static byte[] getRandomEncryptionKey(byte[] encRandomKey) {
-    try {
-      return EncryptionUtil.getEncryptedString(encRandomKey,
-          getPrivateKeyFromString(private_key));
-    } catch (GeneralSecurityException e) {
-      e.printStackTrace();
-    }
-    return null;
   }
 }
