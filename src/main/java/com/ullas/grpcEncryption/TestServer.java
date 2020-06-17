@@ -8,7 +8,6 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import com.google.protobuf.ByteString;
 import com.ullas.grpcEncryption.TestServiceGrpc.TestServiceImplBase;
 import com.ullas.grpcEncryption.utils.AesCryptUtil;
-import com.ullas.grpcEncryption.utils.AesEncryptionUtil;
 import com.ullas.grpcEncryption.utils.EncryptionUtil;
 import java.util.Base64;
 import java.util.Objects;
@@ -84,7 +83,7 @@ public class TestServer extends TestServiceImplBase {
           "hello " + Objects.requireNonNull(reqFromClient).getData()
       ).build();
       encRes = EncryptedMessage.newBuilder().setData(
-          ByteString.copyFrom(AesEncryptionUtil.encrypt(response.toByteArray())))
+          ByteString.copyFrom(Objects.requireNonNull(AesCryptUtil.encrypt(response.toByteArray(), secretkey))))
           .build();
     } catch (Exception e) {
       e.printStackTrace();

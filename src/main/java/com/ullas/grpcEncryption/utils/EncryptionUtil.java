@@ -1,5 +1,6 @@
 package com.ullas.grpcEncryption.utils;
 
+import static java.nio.charset.StandardCharsets.US_ASCII;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 import java.security.InvalidKeyException;
@@ -139,7 +140,7 @@ public final class EncryptionUtil {
     byte[] encrypted = Base64.getDecoder().decode(text);
     String finalString = null;
     try {
-      finalString = new String(cipher.doFinal(encrypted), UTF_8);
+      finalString = new String(cipher.doFinal(encrypted), US_ASCII);
     } catch (BadPaddingException | IllegalBlockSizeException e) {
       e.printStackTrace();
     }

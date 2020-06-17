@@ -1,14 +1,20 @@
 package com.ullas.grpcEncryption.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.Provider;
 import java.util.Arrays;
 import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
  * The type Aes crypt util.
@@ -35,9 +41,9 @@ public final class AesCryptUtil {
   public static byte[] decrypt(byte[] bytesToDecrypt, String secret) {
     try {
       Key aesKey = new SecretKeySpec(secret.getBytes(), "AES");
-      Cipher cipher = Cipher.getInstance("AES");
+      Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
       // decrypt the text
-      cipher.init(Cipher.DECRYPT_MODE, aesKey);
+      cipher.init(Cipher.DECRYPT_MODE, aesKey , new IvParameterSpec("1234567890123456".getBytes(UTF_8)));
       return cipher.doFinal(bytesToDecrypt);
     } catch (Exception e) {
       LOGGER.info("#### EXCEPTION WHILE DECRYPTING : {}" + e.getMessage());
@@ -56,9 +62,9 @@ public final class AesCryptUtil {
   public static byte[] encrypt(byte[] bytesToEncrypt, String secret) {
     try {
       Key aesKey = new SecretKeySpec(secret.getBytes(), "AES");
-      Cipher cipher = Cipher.getInstance("AES");
+      Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
       // encrypt the text
-      cipher.init(Cipher.ENCRYPT_MODE, aesKey);
+      cipher.init(Cipher.ENCRYPT_MODE, aesKey, new IvParameterSpec("1234567890123456".getBytes(UTF_8)));
       return cipher.doFinal(bytesToEncrypt);
     } catch (Exception e) {
       LOGGER.info("Error while encrypting: " + e.toString());

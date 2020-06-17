@@ -2,7 +2,6 @@ package com.ullas.grpcEncryption;
 
 import com.google.protobuf.ByteString;
 import com.ullas.grpcEncryption.utils.AesCryptUtil;
-import com.ullas.grpcEncryption.utils.AesEncryptionUtil;
 import com.ullas.grpcEncryption.utils.EncryptionUtil;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -12,7 +11,6 @@ import java.security.PublicKey;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.Objects;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -140,7 +138,7 @@ public class TestClient {
               .build();
       EncryptedMessage response = blockingStub.getConfig(encReq);
       Response1 responseFromServer =
-          Response1.parseFrom(AesEncryptionUtil.decrypt(response.getData().toByteArray()));
+          Response1.parseFrom(AesCryptUtil.decrypt(response.getData().toByteArray(),"12345678901234567890123456789012"));
       logger.info("Response: " + responseFromServer);
     } catch (RuntimeException e) {
       logger.log(Level.WARNING, "Request to grpc server failed", e);
