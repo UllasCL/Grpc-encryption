@@ -35,11 +35,11 @@ public final class EncryptionUtil {
   /**
    * Gets encrypted string.
    *
-   * @param request    the request
+   * @param respose    the respose
    * @param privateKey the private key
    * @return the encrypted string
    */
-  public static String getEncryptedString(String request, PrivateKey privateKey) {
+  public static byte[] getEncryptedString(byte[] respose, PrivateKey privateKey) {
 
     Cipher cipher = null; //or try with "RSA"
     try {
@@ -60,11 +60,11 @@ public final class EncryptionUtil {
 
     byte[] encrypted = null;
     try {
-      encrypted = cipher.doFinal(request.getBytes(UTF_8));
+      encrypted = cipher.doFinal(respose);
     } catch (BadPaddingException | IllegalBlockSizeException e) {
       e.printStackTrace();
     }
-    return Base64.getEncoder().encodeToString(encrypted);
+    return encrypted;
   }
 
   /**

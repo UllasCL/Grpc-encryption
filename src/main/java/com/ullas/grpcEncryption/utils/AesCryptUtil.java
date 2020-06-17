@@ -35,7 +35,7 @@ public final class AesCryptUtil {
   public static byte[] decrypt(byte[] bytesToDecrypt, String secret) {
     try {
       Key aesKey = new SecretKeySpec(secret.getBytes(), "AES");
-      Cipher cipher = Cipher.getInstance("AES");
+      Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
       // decrypt the text
       cipher.init(Cipher.DECRYPT_MODE, aesKey);
       return cipher.doFinal(bytesToDecrypt);
@@ -56,7 +56,7 @@ public final class AesCryptUtil {
   public static byte[] encrypt(byte[] bytesToEncrypt, String secret) {
     try {
       Key aesKey = new SecretKeySpec(secret.getBytes(), "AES");
-      Cipher cipher = Cipher.getInstance("AES");
+      Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
       // encrypt the text
       cipher.init(Cipher.ENCRYPT_MODE, aesKey);
       return cipher.doFinal(bytesToEncrypt);

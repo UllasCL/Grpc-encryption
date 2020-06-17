@@ -3,15 +3,14 @@ package com.ullas.grpcEncryption.utils;
 import java.security.GeneralSecurityException;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
+import java.util.UUID;
 
 /**
  * The type Random utils.
  */
-public class RandomUtils {
+public class RandomUtil {
 
   /**
    * The constant private_key.
@@ -77,16 +76,18 @@ public class RandomUtils {
   }
 
   /**
-   * Gets public key from string.
+   * Gets random decryption key.
    *
-   * @param stored the stored
-   * @return the public key from string
-   * @throws GeneralSecurityException the general security exception
+   * @param encRandomKey the enc random key
+   * @return the random decryption key
    */
-  public static PublicKey getPublicKeyFromString(String stored) throws GeneralSecurityException {
-    byte[] data = Base64.getDecoder().decode((stored.getBytes()));
-    X509EncodedKeySpec spec = new X509EncodedKeySpec(data);
-    KeyFactory fact = KeyFactory.getInstance("RSA");
-    return fact.generatePublic(spec);
+  public static byte[] getRandomEncryptionKey(byte[] encRandomKey) {
+    try {
+      return EncryptionUtil.getEncryptedString(encRandomKey,
+          getPrivateKeyFromString(private_key));
+    } catch (GeneralSecurityException e) {
+      e.printStackTrace();
+    }
+    return null;
   }
 }

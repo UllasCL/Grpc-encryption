@@ -6,10 +6,6 @@ import com.ullas.grpcEncryption.Request1;
 import com.ullas.grpcEncryption.Response1;
 import com.ullas.grpcEncryption.TestServiceGrpc;
 import com.ullas.grpcEncryption.interceptors.GrpcDecryptionInterceptor;
-import com.ullas.grpcEncryption.interceptors.GrpcServerJwtInterceptor;
-import com.ullas.grpcEncryption.utils.AesCryptUtil;
-import com.ullas.grpcEncryption.utils.AesEncryptionUtil;
-import com.ullas.grpcEncryption.utils.RandomUtils;
 import io.grpc.stub.StreamObserver;
 import java.util.Objects;
 import org.lognet.springboot.grpc.GRpcService;
@@ -17,7 +13,7 @@ import org.lognet.springboot.grpc.GRpcService;
 /**
  * The type Test service.
  */
-@GRpcService()
+@GRpcService(interceptors = {GrpcDecryptionInterceptor.class})
 class TestServiceImpl extends TestServiceGrpc.TestServiceImplBase {
   /**
    * Gets config.
@@ -28,14 +24,11 @@ class TestServiceImpl extends TestServiceGrpc.TestServiceImplBase {
   @Override
   public void getConfig(final EncryptedMessage request,
                         final StreamObserver<EncryptedMessage> responseObserver) {
-
-    String secretkey = RandomUtils.getRandomDecryptionKey(request.getKey().toByteArray());
     Response1 response;
     Request1 reqFromClient = null;
     try {
       reqFromClient =
-          Request1.parseFrom(AesCryptUtil.decrypt(request.getData().toByteArray(),
-              secretkey));
+          Request1.parseFrom(request.getData().toByteArray());
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -46,12 +39,11 @@ class TestServiceImpl extends TestServiceGrpc.TestServiceImplBase {
           "hello " + Objects.requireNonNull(reqFromClient).getData()
       ).build();
       encRes = EncryptedMessage.newBuilder().setData(
-          ByteString.copyFrom(AesEncryptionUtil.encrypt(response.toByteArray())))
+          ByteString.copyFrom(response.toByteArray()))
           .build();
     } catch (Exception e) {
       e.printStackTrace();
     }
-
     responseObserver.onNext(encRes);
     responseObserver.onCompleted();
   }
