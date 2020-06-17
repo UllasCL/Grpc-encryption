@@ -41,9 +41,9 @@ public final class AesCryptUtil {
   public static byte[] decrypt(byte[] bytesToDecrypt, String secret) {
     try {
       Key aesKey = new SecretKeySpec(secret.getBytes(), "AES");
-      Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+      Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
       // decrypt the text
-      cipher.init(Cipher.DECRYPT_MODE, aesKey , new IvParameterSpec("1234567890123456".getBytes(UTF_8)));
+      cipher.init(Cipher.DECRYPT_MODE, aesKey);
       return cipher.doFinal(bytesToDecrypt);
     } catch (Exception e) {
       LOGGER.info("#### EXCEPTION WHILE DECRYPTING : {}" + e.getMessage());
@@ -62,9 +62,9 @@ public final class AesCryptUtil {
   public static byte[] encrypt(byte[] bytesToEncrypt, String secret) {
     try {
       Key aesKey = new SecretKeySpec(secret.getBytes(), "AES");
-      Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+      Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
       // encrypt the text
-      cipher.init(Cipher.ENCRYPT_MODE, aesKey, new IvParameterSpec("1234567890123456".getBytes(UTF_8)));
+      cipher.init(Cipher.ENCRYPT_MODE, aesKey);
       return cipher.doFinal(bytesToEncrypt);
     } catch (Exception e) {
       LOGGER.info("Error while encrypting: " + e.toString());
