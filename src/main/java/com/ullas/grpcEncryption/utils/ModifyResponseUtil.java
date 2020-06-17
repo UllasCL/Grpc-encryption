@@ -4,10 +4,13 @@ import com.google.protobuf.ByteString;
 import com.ullas.grpcEncryption.EncryptedMessage;
 import java.security.GeneralSecurityException;
 import java.util.UUID;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * The type Modify response util.
  */
+@Component
 public class ModifyResponseUtil {
   /**
    * The Response encryption key.
