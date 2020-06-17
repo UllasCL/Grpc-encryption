@@ -1,6 +1,7 @@
 package com.ullas.grpcEncryption.interceptors;
 
 import com.ullas.grpcEncryption.utils.ModifyRequestUtil;
+import com.ullas.grpcEncryption.utils.ModifyResponseUtil;
 import io.grpc.ForwardingServerCallListener;
 import io.grpc.Metadata;
 import io.grpc.MethodDescriptor;
@@ -123,7 +124,7 @@ public class GrpcDecryptionInterceptor implements ServerInterceptor {
     public void sendMessage(R message) {
       LOGGER.info("Method: {}, Response: {}", serverCall.getMethodDescriptor().getFullMethodName(),
           message);
-      R modifiedResponse = ModifyRequestUtil.modifyResponse(message);
+      R modifiedResponse = ModifyResponseUtil.modifyResponse(message);
       serverCall.sendMessage(modifiedResponse);
     }
 
