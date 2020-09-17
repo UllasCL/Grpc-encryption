@@ -21,6 +21,7 @@ private static final long serialVersionUID = 0L;
   }
   private EncryptedMessageReqRes() {
     payload_ = com.google.protobuf.ByteString.EMPTY;
+    encRandomKey_ = "";
   }
 
   @java.lang.Override
@@ -53,9 +54,15 @@ private static final long serialVersionUID = 0L;
           case 0:
             done = true;
             break;
-          case 18: {
+          case 10: {
 
             payload_ = input.readBytes();
+            break;
+          }
+          case 18: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            encRandomKey_ = s;
             break;
           }
           default: {
@@ -90,14 +97,50 @@ private static final long serialVersionUID = 0L;
             com.ullas.grpcEncryption.EncryptedMessageReqRes.class, com.ullas.grpcEncryption.EncryptedMessageReqRes.Builder.class);
   }
 
-  public static final int PAYLOAD_FIELD_NUMBER = 2;
+  public static final int PAYLOAD_FIELD_NUMBER = 1;
   private com.google.protobuf.ByteString payload_;
   /**
-   * <code>bytes payload = 2;</code>
+   * <code>bytes payload = 1;</code>
    * @return The payload.
    */
   public com.google.protobuf.ByteString getPayload() {
     return payload_;
+  }
+
+  public static final int ENCRANDOMKEY_FIELD_NUMBER = 2;
+  private volatile java.lang.Object encRandomKey_;
+  /**
+   * <code>string encRandomKey = 2;</code>
+   * @return The encRandomKey.
+   */
+  public java.lang.String getEncRandomKey() {
+    java.lang.Object ref = encRandomKey_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      encRandomKey_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string encRandomKey = 2;</code>
+   * @return The bytes for encRandomKey.
+   */
+  public com.google.protobuf.ByteString
+      getEncRandomKeyBytes() {
+    java.lang.Object ref = encRandomKey_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      encRandomKey_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
   }
 
   private byte memoizedIsInitialized = -1;
@@ -115,7 +158,10 @@ private static final long serialVersionUID = 0L;
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
     if (!payload_.isEmpty()) {
-      output.writeBytes(2, payload_);
+      output.writeBytes(1, payload_);
+    }
+    if (!getEncRandomKeyBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 2, encRandomKey_);
     }
     unknownFields.writeTo(output);
   }
@@ -128,7 +174,10 @@ private static final long serialVersionUID = 0L;
     size = 0;
     if (!payload_.isEmpty()) {
       size += com.google.protobuf.CodedOutputStream
-        .computeBytesSize(2, payload_);
+        .computeBytesSize(1, payload_);
+    }
+    if (!getEncRandomKeyBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, encRandomKey_);
     }
     size += unknownFields.getSerializedSize();
     memoizedSize = size;
@@ -147,6 +196,8 @@ private static final long serialVersionUID = 0L;
 
     if (!getPayload()
         .equals(other.getPayload())) return false;
+    if (!getEncRandomKey()
+        .equals(other.getEncRandomKey())) return false;
     if (!unknownFields.equals(other.unknownFields)) return false;
     return true;
   }
@@ -160,6 +211,8 @@ private static final long serialVersionUID = 0L;
     hash = (19 * hash) + getDescriptor().hashCode();
     hash = (37 * hash) + PAYLOAD_FIELD_NUMBER;
     hash = (53 * hash) + getPayload().hashCode();
+    hash = (37 * hash) + ENCRANDOMKEY_FIELD_NUMBER;
+    hash = (53 * hash) + getEncRandomKey().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -299,6 +352,8 @@ private static final long serialVersionUID = 0L;
       super.clear();
       payload_ = com.google.protobuf.ByteString.EMPTY;
 
+      encRandomKey_ = "";
+
       return this;
     }
 
@@ -326,6 +381,7 @@ private static final long serialVersionUID = 0L;
     public com.ullas.grpcEncryption.EncryptedMessageReqRes buildPartial() {
       com.ullas.grpcEncryption.EncryptedMessageReqRes result = new com.ullas.grpcEncryption.EncryptedMessageReqRes(this);
       result.payload_ = payload_;
+      result.encRandomKey_ = encRandomKey_;
       onBuilt();
       return result;
     }
@@ -377,6 +433,10 @@ private static final long serialVersionUID = 0L;
       if (other.getPayload() != com.google.protobuf.ByteString.EMPTY) {
         setPayload(other.getPayload());
       }
+      if (!other.getEncRandomKey().isEmpty()) {
+        encRandomKey_ = other.encRandomKey_;
+        onChanged();
+      }
       this.mergeUnknownFields(other.unknownFields);
       onChanged();
       return this;
@@ -408,14 +468,14 @@ private static final long serialVersionUID = 0L;
 
     private com.google.protobuf.ByteString payload_ = com.google.protobuf.ByteString.EMPTY;
     /**
-     * <code>bytes payload = 2;</code>
+     * <code>bytes payload = 1;</code>
      * @return The payload.
      */
     public com.google.protobuf.ByteString getPayload() {
       return payload_;
     }
     /**
-     * <code>bytes payload = 2;</code>
+     * <code>bytes payload = 1;</code>
      * @param value The payload to set.
      * @return This builder for chaining.
      */
@@ -429,12 +489,88 @@ private static final long serialVersionUID = 0L;
       return this;
     }
     /**
-     * <code>bytes payload = 2;</code>
+     * <code>bytes payload = 1;</code>
      * @return This builder for chaining.
      */
     public Builder clearPayload() {
       
       payload_ = getDefaultInstance().getPayload();
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object encRandomKey_ = "";
+    /**
+     * <code>string encRandomKey = 2;</code>
+     * @return The encRandomKey.
+     */
+    public java.lang.String getEncRandomKey() {
+      java.lang.Object ref = encRandomKey_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        encRandomKey_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string encRandomKey = 2;</code>
+     * @return The bytes for encRandomKey.
+     */
+    public com.google.protobuf.ByteString
+        getEncRandomKeyBytes() {
+      java.lang.Object ref = encRandomKey_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        encRandomKey_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string encRandomKey = 2;</code>
+     * @param value The encRandomKey to set.
+     * @return This builder for chaining.
+     */
+    public Builder setEncRandomKey(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      encRandomKey_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string encRandomKey = 2;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearEncRandomKey() {
+      
+      encRandomKey_ = getDefaultInstance().getEncRandomKey();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string encRandomKey = 2;</code>
+     * @param value The bytes for encRandomKey to set.
+     * @return This builder for chaining.
+     */
+    public Builder setEncRandomKeyBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      encRandomKey_ = value;
       onChanged();
       return this;
     }

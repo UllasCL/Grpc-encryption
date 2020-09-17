@@ -19,12 +19,12 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.26.0)",
-    comments = "Source: Message.proto")
+    comments = "Source: message.proto")
 public final class TestServiceGrpc {
 
   private TestServiceGrpc() {}
 
-  public static final String SERVICE_NAME = "TestService";
+  public static final String SERVICE_NAME = "message.TestService";
 
   // Static method descriptors that strictly reflect the proto.
   private static volatile io.grpc.MethodDescriptor<com.ullas.grpcEncryption.EncryptedMessage,
@@ -336,7 +336,7 @@ public final class TestServiceGrpc {
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return com.ullas.grpcEncryption.Message.getDescriptor();
+      return com.ullas.grpcEncryption.MessageProto.getDescriptor();
     }
 
     @java.lang.Override
